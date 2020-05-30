@@ -18,7 +18,7 @@ const Login = () => {
                 <h1 className="Login__form__title" >Ingresa a Conectir</h1>
                 <p className="Login__form__subtitle">Para  ser parte de la plataforma más solidaria del mundo, debes <br />conectarte mediante GitHub</p>
                 
-                <Input title="Correo" placeholder="Escribe aquí tu correo" exportValue={ setEmail } />
+                <Input title="Correo" type="email" placeholder="Escribe aquí tu correo" exportValue={ setEmail } />
                 <Input title="Contraseña" type="password" placeholder="Escribe aquí tu contraseña" exportValue={ setPassword } />
                 <Button title="Ingresar" type="active" data="default"/>
                 <Button title="Continuar con GitHub" type="github" data="github"/>
