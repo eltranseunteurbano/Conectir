@@ -20,7 +20,7 @@ $ npm run build
 ```
 
 ### Build
-Este comando construye el proyecto optimizado para producción y genera la carpeta **"dist"**
+Este comando construye el proyecto optimizado para producción y genera la carpeta **"build"**
 ``` 
 $ npm run build
 ```

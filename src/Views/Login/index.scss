@@ -1,0 +1,40 @@
+.Login {
+    display: grid;
+    grid-template: 1fr / 30vw 70vw;
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        margin: auto;
+
+        &__title {
+            color: var(--color-black);
+            font-weight: var(--h1-weight);
+            font-size: var(--h1-size);
+
+            margin-bottom: 40px;
+        }
+
+        &__subtitle {
+            color: var(--color-black);
+            font-weight: var(--regular-weight);
+            font-size: var(--regular-size);
+            text-align: center;
+
+            margin-bottom: 80px;
+        }
+
+        &__register {
+            color: var(--color-black);
+            font-weight: var(--regular-weight);
+            font-size: var(--regular-size);
+
+            a{
+                color: var(--color-black);
+            }
+        }
+    }
+}
