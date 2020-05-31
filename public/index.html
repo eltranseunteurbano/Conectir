@@ -13,9 +13,36 @@
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
     <title>Conectir</title>
+
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap');
+
+      #root{
+        width: 100vw;
+        height: 100vh;
+      }
+      .loading{
+        background-color: "#ffffff";
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Rubik', sans-serif;
+        font-size: 400;
+      }
+
+    </style>
   </head>
+  
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div id="root">
+      <section class="loading">
+        <img src="%PUBLIC_URL%/Images/LogoHorizontal.svg" alt="Logo" />
+        <h1> Cargando... </h1>
+    </section>
+    </div>
   </body>
 </html>
