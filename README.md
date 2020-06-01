@@ -1,4 +1,4 @@
-![ Button Principal](./Reporte/../build/Images/LogoHorizontal.svg)
+![ Logo](./public/Images/LogoHorizontal.svg)
 
 ![ Presentación ](./Reporte/Presentación.png)
 
