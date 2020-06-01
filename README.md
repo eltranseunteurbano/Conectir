@@ -1,3 +1,7 @@
+![ Button Principal](./Reporte/../build/Images/LogoHorizontal.svg)
+
+![ Presentación ](./Reporte/Presentación.png)
+
 # Pasos para ejecutar el proyecto
 1. Instalar las dependencias y las dependecias de desarrollo con el siguiente comando
 
