@@ -1,0 +1,98 @@
+.header{
+    width: 100vw;
+    height: 70px;
+    background-color: var(--color-white);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header__content {
+    width: 100%;
+    max-width: 1920px;
+    padding: 0 50px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &__logo{
+        text-decoration: none;
+    }
+
+    &__nav {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        margin: auto;
+
+        a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            text-decoration: none;
+            color: var(--color-black);
+            font-size: var(--regular-size);
+            font-weight: var(--regular-weight);
+
+            transition: all .2s;
+            cursor: pointer;
+            
+            margin-right: 100px;
+
+            span{
+                margin-right: 15px;
+                font-size: 20px;
+            }
+        }
+
+        a:last-child{
+            margin-right: 0;
+
+            span{
+                transform: scaleX(-1);
+            }
+        }
+
+        a:hover {
+            color: var(--main-color);
+        }
+
+        &-active {
+            color: var(--main-color) !important;
+            font-weight: var(--medium-weight) !important;
+        }
+    }
+
+    &__user{
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        
+        span {
+            font-size: 20px;
+            color: var(--color-black);
+            transition: all .2s;
+            cursor: pointer;
+        }
+
+        span:hover {
+            color: var(--main-color);
+        }
+
+        &__profile{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 15px;
+            cursor: pointer;
+            span {
+                margin-left: 10px;
+            }
+        }
+    }
+}

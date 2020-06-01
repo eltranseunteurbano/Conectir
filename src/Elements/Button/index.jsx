@@ -25,7 +25,7 @@ const Button = ({ title = 'Aquí va el titulo', type = "active", data = "default
         :
         data === 'github' ?
          
-        <button className = "button button-github" >
+        <button className = "button button-github" onClick = { () => onClickGoTo(redirect)}>
             <span> <GoMarkGithub title="Ingresar con GitHub"/> </span>
          { title } 
         </button>

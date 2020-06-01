@@ -9,6 +9,7 @@ import * as Routes from './assets/js/Routes'
 //Componentes
 import Login from './Views/Login'
 import Register from './Views/Register';
+import Home from './Views/Home'
 
 //Styles
 import './assets/styles/reset.css'
@@ -24,6 +25,7 @@ const App = () => {
       <Switch>
         <Route exact path = { Routes.INDEX }> <Login /> </Route>
         <Route exact path = { Routes.REGISTER }> <Register /> </Route>
+        <Route exact path = { Routes.HOME }> <Home /> </Route>
       </Switch>
     </BrowserRouter>
   );
