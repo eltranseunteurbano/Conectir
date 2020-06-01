@@ -73,7 +73,8 @@ En el proyecto hay 3 tipos de componentes:
 - Elementos 
 - Componentes
 - Vistas
-  
+- 
+***
 #### Elementos
 Dentro de los elementos se encuentran todas los átomos del proyecto como lo son los input, buttons, entre otros. Todos están siendo manejados con hooks y propiedades y a su vez todos se encuentran estilados y separados por estados. Por 
 
@@ -127,3 +128,10 @@ Todos estos inputs reciben los siguientes parámetros:
 - **value**: Este parámetro es el valor que tendrá el input para mantener la consistencia. Aquí se introduce el valor del hook donde se almacenerá la información
 - **exportValue**: Este parámetro recibe la función *set* del hook que está almacenando la información
 
+***
+#### Componentes
+Dentro de los componentes se encuentran el conjunto de átomos que forma una sección del sitio, como por ejemplo lo es el *header*, *footer*, *content*, *etc*.
+
+***
+#### Vistas
+Dentro de las vistas se encuentra el conjunto de componentes que construye el *main* de de una de las páginas del sitio
