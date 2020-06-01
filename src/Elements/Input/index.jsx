@@ -1,7 +1,7 @@
 import React from 'react'
 import './index.scss'
 
-const Input = ({ title = 'Titulo', type = 'text', placeholder = 'Aquí va un mensaje', exportValue }) => {
+const Input = ({ title = 'Titulo', type = 'text', placeholder = 'Aquí va un mensaje', value, exportValue }) => {
     
     const onChangeValue = ( event ) => {
 
@@ -16,7 +16,11 @@ const Input = ({ title = 'Titulo', type = 'text', placeholder = 'Aquí va un men
     return(
         <label className="Input">
             <p>{title}</p>
-            <input type={type} placeholder={placeholder} onChange={ ( event ) => onChangeValue( event.target.value ) }/>
+            <input 
+                type={type}
+                placeholder={placeholder}
+                value = {value}
+                onChange={ ( event ) => onChangeValue( event.target.value ) }/>
         </label>
     )
 }

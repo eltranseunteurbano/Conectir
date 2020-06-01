@@ -1,19 +1,31 @@
 import React from 'react';
-import Login from './Views/Login'
-import SplashScreen from './Components/SplashScreen'
 
+//Lybraries
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+
+//Assets
+import * as Routes from './assets/js/Routes'
+
+//Componentes
+import Login from './Views/Login'
+import Register from './Views/Register';
+
+//Styles
 import './assets/styles/reset.css'
 import './assets/styles/styleTitle.css'
 import './assets/styles/general.css'
 
-function App() {
+const App = () => {
  
   console.log("%cHey! Bienvenido a Conectir.", "color: #389CFF; font-size: 16px; font-weight: 400 ;font-family: 'Rubik', sans-serif");
 
   return (
-    <div className="App appear">
-      <Login />
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path = { Routes.INDEX }> <Login /> </Route>
+        <Route exact path = { Routes.REGISTER }> <Register /> </Route>
+      </Switch>
+    </BrowserRouter>
   );
 }
 

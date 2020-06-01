@@ -1,40 +1,42 @@
 .Login {
-    display: grid;
-    grid-template: 1fr / 30vw 70vw;
+	display: grid;
+	grid-template: 1fr / 30vw 70vw;
 
-    &__form {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+	&__form {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
 
-        margin: auto;
+		margin: auto;
 
-        &__title {
-            color: var(--color-black);
-            font-weight: var(--h1-weight);
-            font-size: var(--h1-size);
+		width: 550px;
 
-            margin-bottom: 40px;
-        }
+		&__title {
+			color: var(--color-black);
+			font-weight: var(--h1-weight);
+			font-size: var(--h1-size);
 
-        &__subtitle {
-            color: var(--color-black);
-            font-weight: var(--regular-weight);
-            font-size: var(--regular-size);
-            text-align: center;
+			margin-bottom: 40px;
+		}
 
-            margin-bottom: 80px;
-        }
+		&__subtitle {
+			color: var(--color-black);
+			font-weight: var(--regular-weight);
+			font-size: var(--regular-size);
+			text-align: center;
 
-        &__register {
-            color: var(--color-black);
-            font-weight: var(--regular-weight);
-            font-size: var(--regular-size);
+			margin-bottom: 80px;
+		}
 
-            a{
-                color: var(--color-black);
-            }
-        }
-    }
+		&__register {
+			color: var(--color-black);
+			font-weight: var(--regular-weight);
+			font-size: var(--regular-size);
+
+			a {
+				color: var(--color-black);
+			}
+		}
+	}
 }
