@@ -25,11 +25,8 @@ Este comando construye el proyecto optimizado para producción y genera la carpe
 $ npm run build
 ```
 
-#
-#
 ***
-#
-#
+
 # Estilos
 
 ### Colores
@@ -66,4 +63,67 @@ Se están manejando 3 estilos diferentes:
 - --h2-weight: **700**; /* Bold */
 - --h3-weight: **700**; /* Bold */
 - --medium-weight: **500**; /* Medium */
-- --regular-weight: **400**; /* Regular */
+- --regular-weight: **400**; /* Regular */mar
+
+***
+
+# Componentes
+
+En el proyecto hay 3 tipos de componentes:
+- Elementos 
+- Componentes
+- Vistas
+  
+#### Elementos
+Dentro de los elementos se encuentran todas los átomos del proyecto como lo son los input, buttons, entre otros. Todos están siendo manejados con hooks y propiedades y a su vez todos se encuentran estilados y separados por estados. Por 
+
+##### Buttons
+
+**Button Principal**
+
+![ Button Principal](./Reporte/Button%20Principal.png)
+
+
+**Button Secundario**
+
+![ Button Principal](./Reporte/Button%20Secundario.png)
+
+
+**Button Disabled**
+
+![ Button Principal](./Reporte/Button%20Disabled.png)
+
+**Button Personalizado**
+
+![ Button Principal](./Reporte/Button%20Github.png)
+
+Todos estos botones reciben los siguientes parámetros:
+
+- **title**: Este parámetro esta relacionado con el texto que se mostrará dentro del botón
+- **type**: Este parámetro recibe *"active"*, *"secundary"*, *"disabled"*
+- **data**: Este parámetro recibe *"default"* para mostrar el botón principal, secundario o disabled. Recibe "*github*" para mostrar el botón de github.
+- **redirect**: Este parámetro es opcional, recibe la ruta a donde se quiere rediriger al hacer click
+
+```
+Para configurar un boton como el de github pero con diferentes estilos y contenidos, es necesario retornar dentro de la condición ternaria un bloque de html diferente con otros estilos
+```
+
+##### Inputs
+
+**Input Vacio**
+
+![ Input Vacio](./Reporte/Input%20Vacio.png)
+
+
+**Input con Contenido**
+
+![ Input con Contenido](./Reporte/Input%20Lleno.png)
+
+Todos estos inputs reciben los siguientes parámetros:
+
+- **title**: Este parámetro es el titulo del label que tendrá el input
+- **type**: Este parámetro recibe los diferentes tipos de input de escrítura como *"text"*, *"number"*, *"password*", *"phone*", *"email*", *etc*
+- **placeholder**: Este parámetro es el texto que se mostrará como placeholder.
+- **value**: Este parámetro es el valor que tendrá el input para mantener la consistencia. Aquí se introduce el valor del hook donde se almacenerá la información
+- **exportValue**: Este parámetro recibe la función *set* del hook que está almacenando la información
+
