@@ -1,0 +1,16 @@
+.Points {
+    width: 100%;
+
+    &__title{
+        color: var(--color-black);
+        font-size: var(--h3-size);
+        font-weight: var(--medium-weight);
+        margin-bottom: 30px;
+    }
+
+    &__wp {
+        height: 100vh;
+        max-height: calc( 95vh - 70px - 45px - 20px);
+        overflow: auto;
+    }
+}

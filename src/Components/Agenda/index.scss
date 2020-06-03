@@ -3,8 +3,8 @@
 
     &__title{
         color: var(--color-black);
-        font-size: var(--h2-size);
-        font-weight: var(--h1-weight);
+        font-size: var(--h3-size);
+        font-weight: var(--medium-weight);
         margin-bottom: 30px;
     }
 
@@ -23,6 +23,9 @@
         flex-direction: column;
         justify-content: space-between;
         align-items: center;
+
+        max-height: calc( 85vh - 70px - 45px - 20px);
+        overflow: auto;
 
         img{
             pointer-events: none;

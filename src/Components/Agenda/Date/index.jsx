@@ -1,7 +1,7 @@
 import React from 'react'
 import './index.scss';
 
-const Date = ({ available = false }) => {
+const Date = ({ available = true }) => {
 
     return (
         <div className={ available ? "Date Date-active" : "Date"}>
