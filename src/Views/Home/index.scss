@@ -1,0 +1,10 @@
+.Home {
+    &__wp{
+        padding: 45px 0 0 30px;
+        box-sizing: border-box;
+
+        display: grid;
+        grid-template-columns: 350px 1fr 1fr;
+        grid-gap: 30px;
+    }
+}

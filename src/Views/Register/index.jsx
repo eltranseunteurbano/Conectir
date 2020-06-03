@@ -110,7 +110,7 @@ const Register = () => {
 					<Input title="Nombre" value={ name } placeholder="Aquí va tu nombre" exportValue={ setName }/>
 					<Input title="Apellido" value={ lastName } placeholder="Aquí va tu apellido" exportValue={ setLastName }/>
 					<Input title={ user === "student" ? "Correo Institucional" : user === "honor" ? "Correo electrónico" : "" }value={ email } type="email" placeholder="Aquí va tu correo electrónico" exportValue={ setEmail }/>
-					<label className="Register__form__check"><input type="checkbox" onChange={ () => setCheck(!check) }/> <span>Leí y acepto los <a>Términos y Condiciones</a></span></label>
+					<label className="Register__form__check"><input type="checkbox" onChange={ () => setCheck(!check) }/> <span>Leí y acepto los <a href="#">Términos y Condiciones</a></span></label>
 
 					<div className="Register__form__buttons">
 						<div onClick={goBack}>

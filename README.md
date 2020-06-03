@@ -56,8 +56,9 @@ https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap
 ##### Tamaños
 Dentro del proyecto se están manejando 4 tamaños
 - --h1-size: **32px**;
-- --h2-size: **20px**;
-- --h3-size: **18px**;
+- --h2-size: **24px**;
+- --h3-size: **20px**;
+- --h4-size: **18px**;
 - --regular-size: **18px**;
 
 #### Estilos
@@ -67,7 +68,8 @@ Se están manejando 3 estilos diferentes:
 - --h2-weight: **700**; /* Bold */
 - --h3-weight: **700**; /* Bold */
 - --medium-weight: **500**; /* Medium */
-- --regular-weight: **400**; /* Regular */mar
+- --regular-weight: **400**; /* Regular */
+- --light-weight: **300**; /* Light */
 
 ***
 
