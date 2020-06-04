@@ -25,7 +25,7 @@ const Agenda = () => {
                 {
                     dates.map ( ( date, i ) => {
                         return(
-                            <Date key={ i }/>
+                            <Date key={ i } available={false} />
                         )
                     })
                 }
