@@ -4,7 +4,7 @@ import './index.scss'
 import Header from '../../Components/Header'
 import Agenda from '../../Components/Agenda'
 import Points from '../../Components/Points'
-import CalendarComponent from '../../Components/Calendar'
+import Schedule from '../../Components/Schedule'
 
 const Home = () => {
 
@@ -12,9 +12,11 @@ const Home = () => {
         <main className="Home">
             <Header />
             <section className="Home__wp">
-                <Agenda />
-                <Points />
-                <CalendarComponent />
+                <div className="Home__wp__grid">
+                    <Agenda />
+                    <Points />
+                    <Schedule />
+                </div>
             </section>
         </main>
     )

@@ -1,6 +1,8 @@
 .Points {
     width: 100%;
-
+    padding-top: 50px;
+    box-sizing: border-box;
+    
     &__title{
         color: var(--color-black);
         font-size: var(--h3-size);
