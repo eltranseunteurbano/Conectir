@@ -50,7 +50,43 @@
         }
     }
 
-    &__wp:hover {
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
-    }
+    
 }
+
+/* Tamaño del scroll */
+.Agenda__wp::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    transition: all .4s;
+  }
+  
+   /* Estilos barra (thumb) de scroll */
+  .Agenda__wp::-webkit-scrollbar-thumb {
+    background: #389cff8c;
+    border-radius: 4px;
+    transition: all .4s;
+
+  }
+  
+  .Agenda__wp::-webkit-scrollbar-thumb:active {
+    background-color: #999999;
+  }
+  
+  .Agenda__wp::-webkit-scrollbar-thumb:hover {
+    background: #389cffbb;
+    box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+  }
+  
+   /* Estilos track de scroll */
+  .Agenda__wp::-webkit-scrollbar-track {
+    background: #e1e1e1;
+    border-radius: 4px;
+    transition: all .4s;
+  }
+  
+  .Agenda__wp::-webkit-scrollbar-track:hover, 
+  .Agenda__wp::-webkit-scrollbar-track:active {
+    background: #d4d4d4;
+    opacity: 0;
+  }
+  

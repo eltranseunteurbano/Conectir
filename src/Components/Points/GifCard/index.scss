@@ -1,49 +1,48 @@
 .GifCard {
-    width: 100%;
-    background-color: var(--color-white);
-    border-radius: 8px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  background-color: var(--color-white);
+  border-radius: 8px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.08);
 
-    padding: 30px 40px;
-    box-sizing: border-box;
+  padding: 30px 40px;
+  box-sizing: border-box;
 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 20px;
+
+  &__content {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
+    width: 70%;
+    height: 100%;
 
-    margin-bottom: 20px;
-
-    &__content {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: flex-start;
-        width: 70%;
-        height: 100%;
-
-        h2 {
-            color: var(--color-black);
-            font-size: var(--h2-size);
-            font-weight: var(--medium-weight);
-            margin-bottom: 20px;
-        }
-
-        p {
-            color: var(--color-gray-dark);
-            font-weight: var(--regular-weight);
-            font-size: var(--regular-size);
-
-        }
+    h2 {
+      color: var(--color-black);
+      font-size: var(--h2-size);
+      font-weight: var(--medium-weight);
+      margin-bottom: 20px;
     }
 
-    &__img {
-        pointer-events: none;
-        user-select: none;
-        width: 20%;
-        max-height: 120px;
-
-        img{
-            width: 100%;
-        }
+    p {
+      color: var(--color-gray-dark);
+      font-weight: var(--regular-weight);
+      font-size: var(--regular-size);
     }
+  }
+
+  &__img {
+    pointer-events: none;
+    user-select: none;
+    width: 20%;
+    max-height: 120px;
+
+    img {
+      width: 100%;
+    }
+  }
 }

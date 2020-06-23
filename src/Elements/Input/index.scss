@@ -1,42 +1,42 @@
 .Input {
+  width: 100%;
+  max-width: 450px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+
+  margin-bottom: 30px;
+
+  p {
+    margin-bottom: 16px;
+
+    color: var(--color-black);
+    font-weight: var(--regular-weight);
+    font-size: var(--regular-size);
+  }
+
+  input {
     width: 100%;
-    max-width: 450px;
+    height: 60px;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
+    background-color: var(--color-gray-light);
+    border: none;
 
-    margin-bottom: 30px;
+    padding: 0 25px;
+    box-sizing: border-box;
 
-    p{
-        margin-bottom: 16px;
+    color: var(--color-black);
+    font-weight: var(--regular-weight);
+    font-size: var(--regular-size);
+  }
 
-        color: var(--color-black);
-        font-weight: var(--regular-weight);
-        font-size: var(--regular-size);
-    }
+  input::placeholder {
+    color: var(--color-gray-dark);
+  }
 
-    input{
-        width: 100%;
-        height: 60px;
-
-        background-color: var(--color-gray-light);
-        border: none;
-
-        padding: 0 25px;
-        box-sizing: border-box;
-
-        color: var(--color-black);
-        font-weight: var(--regular-weight);
-        font-size: var(--regular-size);
-    }
-
-    input::placeholder{
-        color: var(--color-gray-dark);
-    }
-
-    input:focus{
-        border: solid 2px var(--main-color);
-    }
+  input:focus {
+    border: solid 2px var(--main-color);
+  }
 }
