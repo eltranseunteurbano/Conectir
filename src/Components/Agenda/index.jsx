@@ -4,7 +4,7 @@ import Button from '../../Elements/Button';
 
 import Date from './Date';
 
-const dates = [2, 3, 3, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5];
+const dates = [];
 
 const Agenda = () => {
   const styleData = {
@@ -20,8 +20,8 @@ const Agenda = () => {
       <h1 className="Agenda__title"> Tu Agenda</h1>
 
       <article className="Agenda__wp" style={dates.length > 0 ? styleData : {}}>
-        {dates.map(() => (
-          <Date available={false} />
+        {dates.map((item) => (
+          <Date available={false} key={item.id} />
         ))}
 
         {dates.length < 1 ? (
