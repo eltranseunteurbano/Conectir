@@ -7,9 +7,16 @@ import Input from '../../Elements/Input';
 import Button from '../../Elements/Button';
 
 import { HourRejected } from '../../assets/js/Alerts';
+import * as Route from '../../assets/js/Routes';
 
 const Agendar = () => {
   const dateNow = new Date();
+
+  const [dateSelected, setDateSelected] = React.useState();
+
+  const onChangeDate = date => {
+    setDateSelected({ date });
+  };
 
   const [startHour, setStartHour] = React.useState(`${dateNow.getHours() < 10 ? 0 + dateNow.getHours() : dateNow.getHours()}:${dateNow.getMinutes() < 10 ? `0${dateNow.getMinutes()}` : dateNow.getMinutes()}`);
   const [endHour, setEndHour] = React.useState(`${dateNow.getHours() < 10 ? 0 + dateNow.getHours() : dateNow.getHours() + 2}:${dateNow.getMinutes() < 10 ? `0${dateNow.getMinutes()}` : dateNow.getMinutes()}`);
@@ -46,7 +53,7 @@ const Agendar = () => {
       </div>
       <article className="AgendaView__wrapper">
         <div className="AgendaView__wrapper__calendar">
-          <Calendar shadow={false} />
+          <Calendar shadow={false} onChangeValue={onChangeDate} />
         </div>
         <div className="AgendaView__wrapper__body">
           <div className="AgendaView__wrapper-hours">
@@ -63,7 +70,7 @@ const Agendar = () => {
         </div>
       </article>
       <div className="AgendaView-btn">
-        <Button title="Prestar mi equipo" type="disabled" />
+        <Button title="Prestar mi equipo" type={dateSelected ? 'active' : 'disabled'} redirect={Route.HOME}/>
       </div>
 
     </main>

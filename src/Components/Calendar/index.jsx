@@ -3,9 +3,9 @@ import './index.scss';
 
 import Calendar from 'react-calendar';
 
-const CalendarComponent = ({ shadow }) => (
+const CalendarComponent = ({ onChangeValue, shadow }) => (
   <div className="Calendar__component" style={!shadow ? { boxShadow: 'none' } : {}}>
-    <Calendar />
+    <Calendar onChange={onChangeValue} />
   </div>
 );
 
