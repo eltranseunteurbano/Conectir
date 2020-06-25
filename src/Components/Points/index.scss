@@ -11,9 +11,12 @@
   }
 
   &__wp {
-    height: 100vh;
-    max-height: calc(95vh - 70px - 45px - 20px);
+    height: calc(95vh - 70px - 45px - 40px);
     overflow: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    grid-gap: 25px;
   }
 }
 

@@ -18,6 +18,21 @@ const data = [
     img: '/images/points/uno.png',
     company: 'uno',
     id: 3
+  }, {
+    title: 'Disfruta un domicilio gratis con Rappi',
+    img: '/images/points/rappi.png',
+    company: 'rappi',
+    id: 14
+  }, {
+    title: 'Obten 50% descuento en Frutas y Verduras del Exito',
+    img: '/images/points/exito.png',
+    company: 'exito',
+    id: 5
+  }, {
+    title: '20% juegos para jugar en casa con tu familia',
+    img: '/images/points/uno.png',
+    company: 'uno',
+    id: 6
   }
 ];
 

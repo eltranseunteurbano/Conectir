@@ -20,7 +20,7 @@ const Button = ({
       ? (
         <button
           disabled={type === 'disabled'}
-          className={type === 'active' ? 'button button-active' : type === 'secundary' ? 'button button-secundary' : 'button'}
+          className={type === 'active' ? 'button button-active' : type === 'secundary' ? 'button button-secundary' : type === 'tertiary-active' ? 'button button-tertiary-active' : type === 'tertiary' ? 'button button-tertiary' : 'button'}
           onClick={() => onClickGoTo(redirect)}
           type="button"
         >

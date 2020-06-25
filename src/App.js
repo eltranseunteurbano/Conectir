@@ -12,6 +12,7 @@ import Login from './Views/Login';
 import Register from './Views/Register';
 import Home from './Views/Home';
 import Agendar from './Views/Agendar';
+import MyPoints from './Views/MyPoints';
 
 import Menu from './Components/Header';
 
@@ -27,12 +28,13 @@ const App = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path = { Routes.INDEX }> <Login /> </Route>
-        <Route exact path = { Routes.REGISTER }> <Register /> </Route>
+        <Route exact path={Routes.INDEX}><Login /></Route>
+        <Route exact path={Routes.REGISTER}><Register /></Route>
         <>
           <Menu />
-          <Route exact path = { Routes.HOME }> <Home /> </Route>
-          <Route exact path = { Routes.AGENDAR }> <Agendar /> </Route>
+          <Route exact path={Routes.HOME}><Home /></Route>
+          <Route exact path={Routes.AGENDAR}><Agendar /></Route>
+          <Route exact path={Routes.PUNTOS}><MyPoints /></Route>
         </>
       </Switch>
     </BrowserRouter>

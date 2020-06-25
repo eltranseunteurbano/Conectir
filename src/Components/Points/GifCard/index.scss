@@ -1,31 +1,33 @@
 .GifCard {
   width: 100%;
+  height: fit-content;
+  max-width: 350px;
   background-color: var(--color-white);
   border-radius: 8px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.08);
 
-  padding: 30px 40px;
+  padding: 20px ;
   box-sizing: border-box;
 
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
 
-  margin-bottom: 20px;
+  transition: all .4s;
 
   &__content {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-between;
-    align-items: flex-start;
-    width: 70%;
-    height: 100%;
+    align-items: center;
+    width: 100%;
 
     h2 {
       color: var(--color-black);
-      font-size: var(--h2-size);
+      font-size: var(--h4-size);
       font-weight: var(--medium-weight);
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
 
     p {
@@ -38,11 +40,21 @@
   &__img {
     pointer-events: none;
     user-select: none;
-    width: 20%;
-    max-height: 120px;
+    width: 50%;
+    margin-right: 25px;
 
     img {
       width: 100%;
     }
   }
+
+  &__btn {
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: -30px;
+  }
+}
+
+.GifCard:hover {
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
 }
