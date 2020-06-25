@@ -17,4 +17,20 @@ const Welcome = () => {
   });
 };
 
-export { Welcome };
+const HourRejected = () => {
+  let timerInterval;
+
+  Swal.fire({
+    title: 'Ups...!',
+    text: 'No puedes seleccionar esta hora',
+    icon: 'error',
+    timer: 2000,
+    showConfirmButton: false,
+    timerProgressBar: true,
+    onClose: () => {
+      clearInterval(timerInterval);
+    }
+  });
+};
+
+export { Welcome, HourRejected };

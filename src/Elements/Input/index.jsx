@@ -2,7 +2,7 @@ import React from 'react';
 import './index.scss';
 
 const Input = ({
-  title = 'Titulo', type = 'text', placeholder = 'Aquí va un mensaje', value, exportValue
+  title = 'Titulo', type = 'text', placeholder = 'Aquí va un mensaje', value, exportValue, defaultValue
 }) => {
   const onChangeValue = (event) => {
     if (type === 'number') {
@@ -20,6 +20,7 @@ const Input = ({
         type={type}
         placeholder={placeholder}
         value={value}
+        defaultChecked={defaultValue}
         onChange={(event) => onChangeValue(event.target.value)}
       />
     </label>

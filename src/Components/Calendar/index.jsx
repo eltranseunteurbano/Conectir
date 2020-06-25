@@ -3,8 +3,8 @@ import './index.scss';
 
 import Calendar from 'react-calendar';
 
-const CalendarComponent = () => (
-  <div className="Calendar__component">
+const CalendarComponent = ({ shadow }) => (
+  <div className="Calendar__component" style={!shadow ? { boxShadow: 'none' } : {}}>
     <Calendar />
   </div>
 );
