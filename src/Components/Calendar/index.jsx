@@ -1,15 +1,12 @@
-import React from 'react'
-import './index.scss'
-import Calendar from 'react-calendar'
+import React from 'react';
+import './index.scss';
 
+import Calendar from 'react-calendar';
 
-const CalendarComponent = () => {
+const CalendarComponent = ({ onChangeValue, shadow }) => (
+  <div className="Calendar__component" style={!shadow ? { boxShadow: 'none' } : {}}>
+    <Calendar onChange={onChangeValue} />
+  </div>
+);
 
-    return (
-        <div>
-            <Calendar />
-        </div>
-    )
-}
-
-export default CalendarComponent
+export default CalendarComponent;
