@@ -13,6 +13,7 @@ import Register from './Views/Register';
 import Home from './Views/Home';
 import Agendar from './Views/Agendar';
 import MyPoints from './Views/MyPoints';
+import Buscar from './Views/Buscar';
 
 import Menu from './Components/Header';
 
@@ -35,6 +36,7 @@ const App = () => {
           <Route exact path={Routes.HOME}><Home /></Route>
           <Route exact path={Routes.AGENDAR}><Agendar /></Route>
           <Route exact path={Routes.PUNTOS}><MyPoints /></Route>
+          <Route exact path={Routes.BUSCAR}><Buscar /></Route>
         </>
       </Switch>
     </BrowserRouter>

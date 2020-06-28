@@ -5,6 +5,7 @@ import { Link, NavLink } from 'react-router-dom';
 import {
   AiOutlineHome, AiOutlineCalendar, AiOutlineTag, AiOutlineBell, AiOutlineDown
 } from 'react-icons/ai';
+import { FiSearch } from 'react-icons/fi';
 
 import * as Routes from '../../assets/js/Routes';
 
@@ -26,6 +27,10 @@ const Header = () => (
         <NavLink to={Routes.AGENDAR} activeClassName="header__content__nav-active">
           <span><AiOutlineCalendar /></span>
           Agendar
+        </NavLink>
+        <NavLink to={Routes.BUSCAR} activeClassName="header__content__nav-active">
+          <span><FiSearch /></span>
+          Buscar
         </NavLink>
         <NavLink to={Routes.PUNTOS} activeClassName="header__content__nav-active">
           <span><AiOutlineTag /></span>

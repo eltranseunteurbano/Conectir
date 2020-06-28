@@ -1,0 +1,161 @@
+.Buscar {
+  width: 100vw;
+  max-width: 1920px;
+  min-height: calc( 100vh - 70px );
+
+  display: grid;
+  grid-template-areas: 1fr auto;  
+
+  &__wrapper {
+    padding: 50px 30px;
+    padding-bottom: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: calc(100vh - 70px);
+    overflow-y: scroll;
+
+    width: calc(100% - 400px);
+
+    &__header {
+      margin-bottom: 50px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      h2 {
+        color: var(--color-black);
+        font-weight: var(--h2-weight);
+        font-size: var(--h2-size);
+        margin-bottom: 25px;
+      }
+
+      &-text {
+        color: var(--color-black);
+        font-weight: var(--regular-weight);
+        font-size: var(--regular-size);
+        max-width: 540px;
+      }
+    }
+
+    &__body {
+      display: grid;
+      grid-template-columns: repeat(4, 315px);
+      grid-gap: 25px;
+    }
+  }
+
+  &__filters {
+    padding: 50px 30px;
+    box-sizing: border-box;
+    border-left: solid 2px var(--color-gray-light);
+    position: fixed;
+    right: 0;
+    width: 400px;
+    height: 100%;
+    z-index: 1;
+
+    h2 {
+      color: var(--color-black);
+      font-weight: var(--h2-weight);
+      font-size: var(--h2-size);
+      margin-bottom: 25px;
+    }
+
+    &__wp {
+      &-item {
+        margin-bottom: 25px;
+        h3 {
+          color: var(--color-black);
+          font-weight: var(--h3-weight);
+          font-size: var(--h3-size);
+          margin-bottom: 15px;
+        }
+
+        &__content{
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+
+          &__body {
+            padding: 10px;
+            box-sizing: border-box;
+            cursor: pointer;
+  
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+  
+            &__box {
+              width: 15px;
+              height: 15px;
+              margin-right: 15px;
+              border: solid 2px var(--color-gray-dark);
+              transition: all .4s;
+            }
+    
+            &__text {
+              font-size: var(--regular-size);
+              font-weight: var(--regular-weight);
+              color: var(--color-black);
+              transition: all .4s;
+            }
+          }
+          &__body:hover {
+            .Buscar__filters__wp-item__content__body {
+              &__box{
+                border-color: var(--main-color);
+              }
+              &__text {
+                color: var(--main-color);
+              }
+            }
+          }
+        }
+
+      }
+    }
+  }
+}
+
+/* Tamaño del scroll */
+.Buscar__wrapper::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    transition: all .4s;
+
+}
+
+ /* Estilos barra (thumb) de scroll */
+ .Buscar__wrapper::-webkit-scrollbar-thumb {
+  background: #389cff8c;
+  border-radius: 4px;
+  transition: all .4s;
+
+}
+
+.Buscar__wrapper::-webkit-scrollbar-thumb:active {
+  background-color: #999999;
+}
+
+.Buscar__wrapper::-webkit-scrollbar-thumb:hover {
+  background: #389cffbb;
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+ /* Estilos track de scroll */
+ .Buscar__wrapper::-webkit-scrollbar-track {
+  background: #e1e1e1;
+  border-radius: 4px;
+  transition: all .4s;
+}
+
+.Buscar__wrapper::-webkit-scrollbar-track:hover, 
+.Buscar__wrapper::-webkit-scrollbar-track:active {
+  background: #d4d4d4;
+  opacity: 0;
+}
