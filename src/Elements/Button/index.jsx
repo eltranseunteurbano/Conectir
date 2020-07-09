@@ -14,7 +14,7 @@ const Button = ({ title = 'Aquí va el titulo', type = "active", data = "default
 
     const onClickGoTo = (link) => {
         
-        if (data == 'github') {
+        if (data === 'github') {
             var provider = new firebase.auth.GithubAuthProvider();
             Firebase.auth().signInWithRedirect(provider);
 
