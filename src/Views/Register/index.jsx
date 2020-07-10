@@ -42,10 +42,9 @@ const Register = (props) => {
 		setStep(1)
 	}
 
-	const register = async () => {
+		const register = async () => {
 		firebase.auth().createUserWithEmailAndPassword(email, password)
 		.then( () => {
-			//firebaseFirestore.collection('users').add({ uid: firebaseUser.uid, name, lastName, email, type: user });
 			firebaseFirestore.collection('users').doc(firebaseUser.uid).set({ uid: firebaseUser.uid, name, lastName, email, type: user }).then(()=>{console.log('escrito')}).catch((error)=>console.log(error))
 			firebaseUser.updateProfile({
 				displayName: name + ' ' + lastName,
@@ -59,7 +58,7 @@ const Register = (props) => {
 			setCheck(false)
 			setStep(1)
 			setUser("")
-			//history.push(Routes.HOME)
+			history.push(Routes.INDEX)
 		})
 		.catch(( error )=> {
 			console.error(error)

@@ -1,7 +1,7 @@
 import React from "react";
 import "./index.scss";
 
-import { useFirebaseApp, useUser, useFirestore } from "reactfire";
+import { useFirebaseApp, useUser } from "reactfire";
 
 //redux
 import { connect } from 'react-redux';
@@ -24,7 +24,7 @@ const Login = (props) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
-  const loginWithEmail = async () => {
+    const loginWithEmail = async () => {
     if (email && password !== "") {
       firebase
         .auth().signInWithEmailAndPassword(email, password)
@@ -83,7 +83,6 @@ const Login = (props) => {
           />
         </div>
         <div
-          onClick={loginWithEmail}
           style={{ width: "100%", display: "flex", justifyContent: "center" }}
         >
           <Button title='Continuar con GitHub' data='github' />
