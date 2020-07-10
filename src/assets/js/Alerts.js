@@ -1,20 +1,20 @@
-import Swal from 'sweetalert2'
-
+import Swal from "sweetalert2";
 
 export const Welcome = () => {
-    let timerInterval;
+  Swal.fire({
+    title: "¡Bienvenido!",
+    text: "Ahora eres parte de la comunidad más solidaria del mundo",
+    icon: "success",
+    showConfirmButton: false,
+  });
+};
 
+
+export const errorAlert = (text) => {
     Swal.fire({
-        title: '¡Bienvenido!',
-        text: "Ahora eres parte de la comunidad más solidaria del mundo",
-        icon: 'success',
-        timer: 2000,
-        showConfirmButton: false,
-        timerProgressBar: true,
-          onClose: () => {
-              clearInterval(timerInterval)
-              console.log("close")
-          }
-    })
-
-}
+      title: "¡Ups..!",
+      text,
+      icon: "error",
+      showConfirmButton: false,
+    });
+  };

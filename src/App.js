@@ -1,7 +1,7 @@
 import React from 'react';
 
 //Lybraries
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom'; 
 
 //Assets
 import * as Routes from './assets/js/Routes'

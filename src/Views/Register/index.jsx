@@ -1,17 +1,29 @@
 import React from 'react'
 import './index.scss'
 
-import { useHistory } from 'react-router-dom'
+//redux
+import { connect } from 'react-redux';
+import { registerStudentRequest } from '../../redux/actions';
+
+//Firebase
+import 'firebase/auth';
+import { useFirebaseApp, useFirestore, useUser } from 'reactfire';
 
 import Background from '../../Components/Background/index'
 import Button from '../../Elements/Button'
 import Input from '../../Elements/Input'
 
 import * as Routes from '../../assets/js/Routes'
-import { Welcome } from '../../assets/js/Alerts'
+import { useHistory } from 'react-router-dom';
+import { Welcome, errorAlert } from '../../assets/js/Alerts'
 
-const Register = () => {
-	let history = useHistory()
+const Register = (props) => {
+
+	const firebase = useFirebaseApp();
+	const firebaseUser = useUser();
+	const firebaseFirestore = useFirestore();
+
+	let history = useHistory();
 
 	const [ step, setStep ] = React.useState(1)
 	const [ user, setUser ] = React.useState('')
@@ -19,7 +31,7 @@ const Register = () => {
 	const [ name, setName ] = React.useState("")
 	const [ lastName, setLastName ] = React.useState("")
 	const [ email, setEmail ] = React.useState("")
-
+	const [ password, setPassword ] = React.useState("")
 	const [ check, setCheck ] = React.useState(false)
 
 	const goBack = () => {
@@ -30,16 +42,40 @@ const Register = () => {
 		setStep(1)
 	}
 
-	const register = () => {
-		setName("");
-		setLastName("");
-		setEmail("");
-		setCheck(false)
-		setStep(1)
-		setUser("")
-		Welcome()
+	const register = async () => {
+		firebase.auth().createUserWithEmailAndPassword(email, password)
+		.then( () => {
+			firebaseFirestore.collection('users').add({ uid: firebaseUser.uid, name, lastName, email, type: user });
+			firebaseUser.updateProfile({
+				displayName: name + ' ' + lastName,
+			}).catch(error => console.error(error))
+			props.registerStudentRequest(firebaseUser)
+			Welcome()
+			setName("");
+			setLastName("");
+			setEmail("");
+			setPassword("");
+			setCheck(false)
+			setStep(1)
+			setUser("")
+			history.push(Routes.HOME)
+		})
+		.catch(( error )=> {
+			console.error(error)
+			switch(error.code){
+				case 'auth/email-already-in-use':
+					return errorAlert('Este correo ya esta en uso');
+				
+				case 'auth/weak-password':
+					return errorAlert('La contraseña debe tener minimo 6 caracteres');
 
-		history.push(Routes.HOME)
+				case 'auth/invalid-email':
+					return errorAlert('Tienes un error en tu correo electrónico. Intentalo nuevamente.');
+
+				default:
+					return errorAlert('Se presentó un error ');
+			}
+		});
 	}
 
 	return(
@@ -100,7 +136,7 @@ const Register = () => {
 							<p>Soy donante</p>
 						</div>
 						<Button title="Regresar" type="secundary" data="default" redirect={Routes.INDEX}/>
-						<div onClick={() => setStep(2)}><Button title="Continuar" type={ user !== '' ? 'active' : 'disabled'} data='default'  /></div>					
+						<div onClick={() => setStep(2)}><Button title="Continuar" type={ user !== '' ? 'active' : 'disabled'} data='default' /></div>					
 					</div>
 				</article>
 			: step === 2 ?
@@ -110,6 +146,7 @@ const Register = () => {
 					<Input title="Nombre" value={ name } placeholder="Aquí va tu nombre" exportValue={ setName }/>
 					<Input title="Apellido" value={ lastName } placeholder="Aquí va tu apellido" exportValue={ setLastName }/>
 					<Input title={ user === "student" ? "Correo Institucional" : user === "honor" ? "Correo electrónico" : "" }value={ email } type="email" placeholder="Aquí va tu correo electrónico" exportValue={ setEmail }/>
+					<Input title="Contraseña" placeholder="Aquí va tu contraseña" type="password" exportValue={ setPassword } />
 					<label className="Register__form__check"><input type="checkbox" onChange={ () => setCheck(!check) }/> <span>Leí y acepto los <a href="#">Términos y Condiciones</a></span></label>
 
 					<div className="Register__form__buttons">
@@ -132,5 +169,8 @@ const Register = () => {
 		</main>
 	)
 }
+const mapDispatchToProps = {
+  registerStudentRequest,
+};
 
-export default Register
+export default connect(null, mapDispatchToProps)(Register);
