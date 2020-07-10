@@ -5,13 +5,13 @@ const reducer = (state, action) => {
     case actions.loginRequest:
       return {
         ...state,
-        user: { 'uid': action.payload.uid, 'email': action.payload.email },
+        user: action.payload,
       };
 
     case actions.registerStudentRequest:
       return {
         ...state,
-        user: { 'uid': action.payload.uid, 'email': action.payload.email },
+        user: action.payload,
       };
 
       default:

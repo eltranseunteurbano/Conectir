@@ -1,7 +1,7 @@
 import React from "react";
 import "./index.scss";
 
-import { useFirebaseApp, useUser } from "reactfire";
+import { useFirebaseApp, useUser, useFirestore } from "reactfire";
 
 //redux
 import { connect } from 'react-redux';
@@ -25,20 +25,19 @@ const Login = (props) => {
   const [password, setPassword] = React.useState("");
 
   const loginWithEmail = async () => {
-      console.log(firebase)
     if (email && password !== "") {
       firebase
-        .auth()
-        .signInWithEmailAndPassword(email, password)
+        .auth().signInWithEmailAndPassword(email, password)
         .then(() => {
-            props.loginRequest(user)
+          console.log(user.uid)
+          props.loginRequest(user)
             setEmail("");
             setPassword("");
             Welcome();
             history.push(Routes.HOME);
         })
         .catch((error) => {
-          console.error(error);
+          console.error(error.message);
           if(error.code === 'auth/invalid-email'){
             errorAlert('Tienes un error en tu correo electrónico. Intentalo nuevamente.');
           } else if(error.code === 'auth/user-not-found'){
