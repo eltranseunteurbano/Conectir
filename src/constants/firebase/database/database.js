@@ -31,11 +31,11 @@ class database_firebase {
 
             if (snapshot.exists()) {
 
-                if (key == "") {
+                if (key === "") {
                     value = snapshot;
                     exist = true;
-                } else if (key != "") {
-                    if (key.toLowerCase() == val.toLowerCase()) {
+                } else if (key !== "") {
+                    if (key.toLowerCase() === val.toLowerCase()) {
                         value = snapshot;
                         exist = true;
                     }

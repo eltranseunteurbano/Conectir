@@ -72,6 +72,7 @@
   }
 
   &__user {
+    position: relative;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -95,6 +96,38 @@
       cursor: pointer;
       span {
         margin-left: 10px;
+      }
+    }
+
+    &__options {
+      position: absolute;
+      top: 0px;
+
+      width: 150px;
+      height: 100px;
+
+      
+      &:hover &__list{
+        opacity: 1;
+      }
+      &__list {
+        transition: all 0.5s ease;
+        opacity: 0;
+        position: absolute;
+        top: 50px;
+
+        &__item {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 150px;
+          height: 50px;
+          background-color: var(--color-white);
+
+          &:hover{
+            color: var(--main-color);
+          }
+        }
       }
     }
   }

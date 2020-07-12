@@ -19,7 +19,7 @@ const Input = ({
       <input
         type={type}
         placeholder={placeholder}
-        value={value}
+        defaultValue={value}
         defaultChecked={defaultValue}
         onChange={(event) => onChangeValue(event.target.value)}
       />
