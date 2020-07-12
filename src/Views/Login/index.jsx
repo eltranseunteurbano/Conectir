@@ -1,9 +1,9 @@
-import React from 'react'
-import './index.scss'
+import React from 'react';
+import './index.scss';
 
 import { Link, Redirect } from 'react-router-dom'
 
-import * as Routes from '../../assets/js/Routes'
+import * as Routes from '../../assets/js/Routes';
 
 import BackgroundImage from '../../Components/Background'
 import Input from '../../Elements/Input'
@@ -12,24 +12,34 @@ import { useEffect } from 'react'
 import User from '../../constants/firebase/user/user'
 
 const Login = () => {
-
-    const [email, setEmail] = React.useState("");
-    const [password, setPassword] = React.useState("");
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
 
     const [r_register, serR_register] = React.useState(false);
+    const [r_home, serR_home] = React.useState(false);
+
+    const loginIn = () => {
+        User.login(email, password)
+    }
 
     useEffect(() => {
-        serR_register(false) 
-        User.getUserGithup((user) => {
-            if(user){
-                serR_register(true) 
+        serR_register(false)
+        User.getUserGithup((user, exist) => {
+            if (user && !exist) {
+                serR_register(true);
+            } else if(exist){
+                serR_home(true);
             }
         }, []);
+
+        return (()=>{})
+      
     })
 
     return (
         <main className="Login">
             {r_register && <Redirect to={Routes.REGISTER} />}
+            {r_home && <Redirect to={Routes.HOME} />}
 
             <BackgroundImage />
 
@@ -39,14 +49,14 @@ const Login = () => {
 
                 <Input title="Correo" type="email" placeholder="Escribe aquí tu correo" exportValue={setEmail} />
                 <Input title="Contraseña" type="password" placeholder="Escribe aquí tu contraseña" exportValue={setPassword} />
-                <Button title="Ingresar" type={email !== "" && password !== "" ? "active" : "disabled"} data="default" redirect={Routes.HOME} />
+                <Button title="Ingresar" type={email !== "" && password !== "" ? "active" : "disabled"} data="button" onClick={loginIn} redirect={Routes.HOME} />
                 <Button title="Continuar con GitHub" data="github" redirect={Routes.HOME} />
 
-                <h2 className="Login__form__register">¿Aún no tienes una cuenta? <Link onClick={() => { serR_register(true) }}>Regístrate</Link> </h2>
+                <h2 className="Login__form__register">¿Aún no tienes una cuenta? <Link to={Routes.REGISTER} onClick={() => { serR_register(true) }}>Regístrate</Link> </h2>
             </section>
 
         </main>
-    )
-}
+    );
+};
 
-export default Login
+export default Login;

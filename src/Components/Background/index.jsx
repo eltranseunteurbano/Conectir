@@ -1,13 +1,8 @@
-import React from 'react'
+import React from 'react';
 import './index.scss';
 
-
-const BackgroundImage = () => {
-    return(
-        <div className="BackgroundImage" style={{backgroundImage: 'url("' + process.env.PUBLIC_URL + 'Images/LoginBackground.png")'}}>
-
-        </div>
-    )
-}
+const BackgroundImage = () => (
+  <div className="BackgroundImage" style={{ backgroundImage: `url("${process.env.PUBLIC_URL}Images/LoginBackground.png")` }} />
+);
 
 export default BackgroundImage;

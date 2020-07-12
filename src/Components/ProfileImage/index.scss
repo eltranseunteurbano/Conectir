@@ -1,23 +1,23 @@
-.ProfileImage{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.ProfileImage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    &__photo {
-        width: 30px;
-        height: 30px;
-        background: red;
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
+  &__photo {
+    width: 30px;
+    height: 30px;
+    background: red;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
 
-        border-radius: 30px;
-        margin-right: 10px;
-    }
+    border-radius: 30px;
+    margin-right: 10px;
+  }
 
-    &__name {
-        color: var(--color-black);
-        font-size: var(--regular-size);
-        font-weight: var(--medium-weight);
-    }
+  &__name {
+    color: var(--color-black);
+    font-size: var(--regular-size);
+    font-weight: var(--medium-weight);
+  }
 }

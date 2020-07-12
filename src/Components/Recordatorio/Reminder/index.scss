@@ -1,0 +1,22 @@
+.Reminder {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: solid 1px var(--color-gray-dark);
+
+  &__date {
+    color: var(--main-color);
+    font-weight: var(--regular-weight);
+    font-size: var(--h3-size);
+    margin-bottom: 10px;
+  }
+
+  &__text {
+    color: var(--color-black);
+    font-weight: var(--regular-weight);
+    font-size: var(--regular-size);
+  }
+}
+
+.Reminder-borderNone {
+  border: none !important;
+}
