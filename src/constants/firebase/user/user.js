@@ -35,7 +35,7 @@ class user_firebase {
 
     getUserGithup(load) {
         Firebase.auth().getRedirectResult().then(({ user }) => {
-            console.log(user)
+          
             if (user) {
                 var url = routes_database.user + "/" + user.uid;
                 Database.evalueteRouteExist(url, (exist, userState) => {
@@ -137,13 +137,12 @@ class user_firebase {
 
         if (uid === null) {
 
-            this.auth.createUserWithEmailAndPassword(email, pass).then((user) => {
-                console.log(user);
+            this.auth.createUserWithEmailAndPassword(email, pass).then((userdata) => {
+              
 
-
-                let url = routes_database.user + "/" + user.user.uid;
+                let url = routes_database.user + "/" + userdata.user.uid;
                 var user = {
-                    uid: user.user.uid, email, accountType
+                    uid: userdata.user.uid, email, accountType
                 }
                 Database.writeDatabase(url, user, () => {
                     this.updateUser(user);
