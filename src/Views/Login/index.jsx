@@ -1,6 +1,12 @@
 import React from 'react';
 import './index.scss';
 
+//redux
+import { connect } from 'react-redux';
+import { loginRequest } from '../../redux/actions';
+
+import { useFirebaseApp, useUser } from "reactfire";
+
 import { Link, Redirect } from 'react-router-dom'
 
 import * as Routes from '../../assets/js/Routes';
@@ -27,14 +33,15 @@ const Login = () => {
         User.getUserGithup((user, exist) => {
             if (user && !exist) {
                 serR_register(true);
-            } else if(exist){
+            } else if (exist) {
                 serR_home(true);
             }
-        }, []);
+        });
 
-        return (()=>{})
-      
-    })
+        return (() => {
+        })
+
+    }, []);
 
     return (
         <main className="Login">
@@ -59,4 +66,8 @@ const Login = () => {
     );
 };
 
-export default Login;
+const mapDispatchToProps = {
+    loginRequest,
+};
+
+export default connect(null, mapDispatchToProps)(Login);

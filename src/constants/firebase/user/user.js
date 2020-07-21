@@ -3,7 +3,7 @@ import * as firebase from "firebase/app";
 import Database, { routes_database } from "../database/database";
 import Firebase from "../setup/firebase";
 import EventManager from "../../helpers/EventManager";
-
+import { errorAlert } from "../../../assets/js/Alerts";
 
 class user_firebase {
 
@@ -25,7 +25,9 @@ class user_firebase {
 
         this.auth = Firebase.auth();
 
-        this.getUserChangeLocal(() => { })
+        this.getUserChangeLocal(() => {
+
+        })
     }
 
     loginGithup() {
@@ -35,12 +37,17 @@ class user_firebase {
 
     getUserGithup(load) {
         Firebase.auth().getRedirectResult().then(({ user }) => {
-          
+
             if (user) {
                 var url = routes_database.user + "/" + user.uid;
                 Database.evalueteRouteExist(url, (exist, userState) => {
                     if (!exist) {
                         this.createUserDatabase(user.uid, user.email, "githup");
+
+                        if (user) {
+                            //  var uid = result.user.uid;
+                            user.sendEmailVerification();
+                        }
                     } else {
                         var userS = userState.val();
                         this.updateUser(userS);
@@ -50,6 +57,7 @@ class user_firebase {
 
                     var url2 = routes_database.user + "/" + user.uid + "/information";
                     Database.evalueteRouteExist(url2, (exist2) => {
+                        this.getUserChangeLocal();
                         load(user, exist2);
                     });
 
@@ -65,18 +73,25 @@ class user_firebase {
     login(user, password, load) {
         this.auth.signInWithEmailAndPassword(user, password).then(() => {
             load && load();
-        });
+        }).catch((error) => {
+            console.error(error.message);
+            if (error.code === 'auth/invalid-email') {
+                errorAlert('Tienes un error en tu correo electrónico. Intentalo nuevamente.');
+            } else if (error.code === 'auth/user-not-found') {
+                errorAlert('No hay un usuario registrado con este correo electrónico.');
+            } else if (error.code === 'auth/wrong-password') {
+                errorAlert('Tu correo electrónico o contraseña estan equivocados.');
+            }
+        });;
     }
 
-    register(user, password, load) {
-        this.auth.createUserWithEmailAndPassword(user, password).then((result) => {
-            if (result.user) {
-                //  var uid = result.user.uid;
-                load(result);
-            }
-        }).catch((error) => {
-            throw new Error(error.message);
-        })
+    register(user, password) {
+
+
+        return this.auth.createUserWithEmailAndPassword(user, password);
+
+
+
     }
 
     logout(load) {
@@ -98,18 +113,21 @@ class user_firebase {
     getUserChangeLocal(load) {
         if (this.userFirebase == null) {
             Firebase.auth().onAuthStateChanged((user) => {
-               
+
+
                 if (user) {
                     // User is signed in.
 
                     this.updateUser({ uid: user.uid, email: user.email });
+                    this.event.exeEvent("updateUser");
+
 
                     var url3 = routes_database.user + "/" + this.uid + "/accountType";
                     Database.readBrachOnlyDatabase(url3, (snap) => {
                         var type = snap.val();
                         if (type) {
                             this.updateAccountType(type)
-                         
+
                         }
                     })
 
@@ -118,8 +136,8 @@ class user_firebase {
                         if (exist) {
                             var info = snap.val();
                             this.updateInformation(info);
+                            this.event.exeEvent("updateInformation");
                         }
-                      
                     });
 
                     load && load(true);
@@ -137,8 +155,10 @@ class user_firebase {
 
         if (uid === null) {
 
-            this.auth.createUserWithEmailAndPassword(email, pass).then((userdata) => {
-              
+
+
+            this.register(email, pass).then((userdata) => {
+
 
                 let url = routes_database.user + "/" + userdata.user.uid;
                 var user = {
@@ -147,12 +167,27 @@ class user_firebase {
                 Database.writeDatabase(url, user, () => {
                     this.updateUser(user);
                     this.updateAccountType(accountType);
-                    load && load();
+
+                    if (userdata.user) {
+                        //  var uid = result.user.uid;
+                        userdata.user.sendEmailVerification();
+                        load && load(userdata);
+                    }
                 });
 
+
+
             }).catch((error) => {
-                console.log(error);
+                console.error(error.message);
+                if (error.code === 'auth/invalid-email') {
+                    errorAlert('Tienes un error en tu correo electrónico. Intentalo nuevamente.');
+                } else if (error.code === 'auth/user-not-found') {
+                    errorAlert('No hay un usuario registrado con este correo electrónico.');
+                } else if (error.code === 'auth/wrong-password') {
+                    errorAlert('Tu correo electrónico o contraseña estan equivocados.');
+                }
             });
+
 
 
         } else {
@@ -164,6 +199,7 @@ class user_firebase {
             Database.writeDatabase(url, user, () => {
                 this.updateUser(user);
                 this.updateAccountType(accountType);
+
             });
 
         }

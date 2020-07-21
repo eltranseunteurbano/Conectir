@@ -34,3 +34,13 @@ const HourRejected = () => {
 };
 
 export { Welcome, HourRejected };
+
+
+export const errorAlert = (text) => {
+  Swal.fire({
+    title: "¡Ups..!",
+    text,
+    icon: "error",
+    showConfirmButton: false,
+  });
+};
