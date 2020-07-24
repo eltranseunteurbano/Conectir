@@ -1,7 +1,7 @@
 /* eslint-disable spaced-comment */
 import React from 'react';
 
-import { BrowserRouter, Switch, Route } from 'react-router-dom'; 
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import Menu from './Components/Header';
 import Agendar from './Views/Agendar';
@@ -10,6 +10,9 @@ import Home from './Views/Home';
 import Login from './Views/Login';
 import MyPoints from './Views/MyPoints';
 import Register from './Views/Register';
+import S_CheckList from './Servidor/Pages/CheckList';
+import S_CheckStep from './Servidor/Pages/CheckStep';
+import S_Home from './Servidor/Pages/Home';
 import * as Routes from './assets/js/Routes';
 import './assets/styles/general.css';
 import './assets/styles/reset.css';
@@ -22,6 +25,14 @@ const App = () => {
   return (
     <BrowserRouter>
       <Switch>
+        {/**Servidor */}
+
+        <Route exact path={Routes.SERVIDOR.HOME}><S_Home /></Route>
+        <Route exact path={Routes.SERVIDOR.CHECK}><S_CheckList /></Route>
+        <Route exact path={Routes.SERVIDOR.STEP}><S_CheckStep /></Route>
+
+        {/**Aplicacion */}
+
         <Route exact path={Routes.INDEX}><Login /></Route>
         <Route exact path={Routes.REGISTER}><Register /></Route>
         <>

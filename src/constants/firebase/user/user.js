@@ -127,6 +127,7 @@ class user_firebase {
                         var type = snap.val();
                         if (type) {
                             this.updateAccountType(type)
+                            this.event.exeEvent("updateType");
 
                         }
                     })

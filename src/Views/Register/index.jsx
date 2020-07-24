@@ -33,14 +33,16 @@ const Register = (props) => {
 	*/
 	let history = useHistory();
 
-	const [step, setStep] = React.useState(1);
-	const [user, setUser] = React.useState('');
+	const [step, setStep] = useState(1);
+	const [user, setUser] = useState('');
 
-	const [name, setName] = React.useState("")
-	const [lastName, setLastName] = React.useState("")
-	const [email, setEmail] = React.useState("")
-	const [password, setPassword] = React.useState("")
-	const [check, setCheck] = React.useState(false)
+	const [name, setName] = useState("")
+	const [lastName, setLastName] = useState("")
+	const [email, setEmail] = useState("")
+	const [password, setPassword] = useState("")
+	const [check, setCheck] = useState(false)
+	const [type, setType] = useState("");
+
 
 	const goBack = () => {
 		setName('');
@@ -48,6 +50,7 @@ const Register = (props) => {
 		setEmail('');
 		setCheck(false);
 		setStep(1);
+		setType("");
 	};
 
 	const register = () => {
@@ -68,6 +71,7 @@ const Register = (props) => {
 		setStep(1)
 		setUser("")
 		setPassword("")
+		setType("");
 		Welcome()
 	}
 	/*
@@ -118,6 +122,7 @@ const register = async () => {
 		User.event.getEvent("updateType", () => {
 			if (User.accountType === "githup") {
 				setPassword(undefined);
+				setType("githup");
 			}
 		})
 
@@ -207,8 +212,8 @@ const register = async () => {
 						<p className="Register__form__subtitle">Te invitamos a ser parte de la plataforma más solidaria del mundo, conectamos estudiantes</p>
 						<Input title="Nombre" value={name} placeholder="Aquí va tu nombre" exportValue={setName} />
 						<Input title="Apellido" value={lastName} placeholder="Aquí va tu apellido" exportValue={setLastName} />
-						<Input title={user === "student" ? "Correo Institucional" : user === "honor" ? "Correo electrónico" : ""} value={email} type="email" placeholder="Aquí va tu correo electrónico" exportValue={setEmail} />
-						<Input title="Contraseña" placeholder="Aquí va tu contraseña" type="password" exportValue={setPassword} />
+						{type !== "githup" && <Input title={user === "student" ? "Correo Institucional" : user === "honor" ? "Correo electrónico" : ""} value={email} type="email" placeholder="Aquí va tu correo electrónico" exportValue={setEmail} />}
+						{password !== undefined && <Input title="Contraseña" placeholder="Aquí va tu contraseña" type="password" exportValue={setPassword} />}
 						<label className="Register__form__check"><input type="checkbox" onChange={() => setCheck(!check)} /> <span>Leí y acepto los <a href="#">Términos y Condiciones</a></span></label>
 
 						<div className="Register__form__buttons">

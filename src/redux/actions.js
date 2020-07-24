@@ -2,7 +2,12 @@ export const actions = {
   loginGitHubRequest: 'LOGIN_GITHUB_REQUEST',
   loginRequest: 'LOGIN_REQUEST',
   registerStudentRequest: 'REGISTER_STUDENT_REQUEST',
+
+
+  //Unidad del servidor
+  checkStepCurrent: 'CHECK_STEP_CURRRENT',
 }
+
 
 export const loginGitHubRequest = payload => ({
   type: actions.loginGitHubRequest,
@@ -18,3 +23,9 @@ export const registerStudentRequest = payload => ({
   type: actions.registerStudentRequest,
   payload,
 })
+
+
+export const checkStepCurrent = payload => ({
+  type: actions.checkStepCurrent,
+  payload,
+});

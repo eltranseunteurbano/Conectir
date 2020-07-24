@@ -8,15 +8,15 @@ import { GoMarkGithub } from 'react-icons/go';
 import User from '../../constants/firebase/user/user';
 
 const Button = ({
-    title = 'Aquí va el titulo', type = 'active', data = 'default', redirect, onClick
+    title = 'Aquí va el titulo', type = 'active', data = 'default', redirect, onClick, style
 }) => {
     const history = useHistory();
 
     const onClickGoTo = (link) => {
         if (data === 'github') {
             User.loginGithup();
-        } else if (data === "button") { 
-            onClick &&  onClick()
+        } else if (data === "button") {
+            onClick && onClick()
             history.push(link)
         }
         else {
@@ -28,6 +28,7 @@ const Button = ({
         (data === 'default' || data === 'button')
             ? (
                 <button
+                    style={style || {}}
                     disabled={type === 'disabled'}
                     className={type === 'active' ? 'button button-active' : type === 'secundary' ? 'button button-secundary' : type === 'tertiary-active' ? 'button button-tertiary-active' : type === 'tertiary' ? 'button button-tertiary' : 'button'}
                     onClick={() => onClickGoTo(redirect)}
