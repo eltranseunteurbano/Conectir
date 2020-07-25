@@ -16,7 +16,7 @@ import firebaseConfig from './utils/firebase-config';
 
 const initialState = {
   user: {},
-  process: 1
+  process: 2
 }
 
 //Redux debugger en chrome

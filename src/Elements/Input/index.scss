@@ -32,6 +32,23 @@
     font-size: var(--regular-size);
   }
 
+  input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+
+    background-color: var(--color-gray-light);
+    border: none;
+
+    padding: 0 25px;
+    box-sizing: border-box;
+
+    color: var(--color-black);
+    font-weight: var(--regular-weight);
+    font-size: var(--regular-size);
+  }
+
+  
+
   input::placeholder {
     color: var(--color-gray-dark);
   }
@@ -39,4 +56,14 @@
   input:focus {
     border: solid 2px var(--main-color);
   }
+}
+
+.checkbox{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  p{margin-bottom: 0;
+  margin-left: 10px;}
 }

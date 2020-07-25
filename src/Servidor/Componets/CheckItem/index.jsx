@@ -45,13 +45,13 @@ const S_CheckItem = ({ description = "Descripcion", status = "disabled", orden =
         <h1>Paso {orden}</h1>
         <p>{description}</p>
         {icon}
-        <div>
-        {view === "default" ? 
-            <Button data="button" onClick={onClick} type={(status === "disabled" ? status : "active")} title={action} redirect={Routes.SERVIDOR.STEP} />:
-            <></>
-        }
+        <div className="button__choose">
+            {view === "default" ?
+                <Button data="button" onClick={onClick} type={(status === "disabled" ? status : "active")} title={action} redirect={Routes.SERVIDOR.STEP} /> :
+                <></>
+            }
         </div>
-        
+
 
     </div>
 }
