@@ -13,44 +13,29 @@ const S_CheckList = () => {
     var store = useSelector((s) => s)
     var dispatch = useDispatch();
 
-    const onSelectStep = (stepNumber) => {
-
-        switch (stepNumber) {
-            case 1:
-                console.log("Paso 1")
-                // dispatch({ type: actions.checkStepCurrent, payload: stepNumber })
-                break;
-            case 2:
-                console.log("Paso 2")
-                // dispatch({ type: actions.checkStepCurrent, payload: stepNumber })
-                break;
-            case 3:
-                console.log("Paso 3")
-                // dispatch({ type: actions.checkStepCurrent, payload: stepNumber })
-                break;
-            case 4:
-                console.log("Paso 4")
-                // dispatch({ type: actions.checkStepCurrent, payload: stepNumber })
-                break;
-            default:
-                break;
-        }
-
-    }
 
     return <>
         <S_Header />
         <S_Body>
             <div className="S_CheckList">
                 <h1>Completa todos los pasos</h1>
-                <ProgressBar value="1" max="4" />
+                <ProgressBar value={store.process || 1} max="4" />
                 <div className="S_CheckList__steps">
                     <StepContext.Consumer >{
                         stepManager => {
                             return (stepManager.steps.map((step, index) => {
+
+                                var indexProcess = index + 1;
+                                var state = "disabled";
+                                if (indexProcess < store.process) {
+                                    state = "complete";
+                                } else if (store.process === indexProcess) {
+                                    state = "active";
+                                }
+
                                 return <S_CheckItem
                                     key={index}
-                                    status="active"
+                                    status={state}
                                     orden={step.orden}
                                     description={step.description}
                                     action={step.action}

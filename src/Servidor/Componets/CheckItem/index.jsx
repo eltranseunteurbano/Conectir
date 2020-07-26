@@ -39,16 +39,17 @@ const S_CheckItem = ({ description = "Descripcion", status = "disabled", orden =
         dispatch({ type: actions.checkStepCurrent, payload: parseInt(orden) })
     }
 
-    return <div className={"S_CheckItem" + (status === "disabled" ? " S_CheckItem__disabled" : "")}>
+    return <div className={"S_CheckItem" + (status === "disabled" ? " S_CheckItem__disabled" : status === "complete" ? " S_CheckItem__complete" : "")}>
         <I_Reloj status={status} />
         <hr />
         <h1>Paso {orden}</h1>
         <p>{description}</p>
         {icon}
         <div className="button__choose">
-            {view === "default" ?
+            {view === "default" && status !== "complete" ?
                 <Button data="button" onClick={onClick} type={(status === "disabled" ? status : "active")} title={action} redirect={Routes.SERVIDOR.STEP} /> :
-                <></>
+                <>{status === "complete" && <h1 className="S_CheckItem__complete__title">Completado
+                    </h1>}</>
             }
         </div>
 

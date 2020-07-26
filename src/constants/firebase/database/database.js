@@ -120,6 +120,7 @@ var Database = new database_firebase();
 export default Database;
 
 export var routes_database = {
-    user: "app/users"
+    user: "app/users",
+    solicitud: "app/solicitud"
 }
 

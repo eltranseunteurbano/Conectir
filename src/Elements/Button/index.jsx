@@ -9,6 +9,7 @@ import User from '../../constants/firebase/user/user';
 
 const Button = ({
     title = 'Aquí va el titulo', type = 'active', data = 'default', redirect, onClick, style
+    , redirectCondicion = () => { return true }
 }) => {
     const history = useHistory();
 
@@ -20,7 +21,9 @@ const Button = ({
             history.push(link)
         }
         else {
-            history.push(link)
+            if(redirectCondicion()){
+                history.push(link)
+            }
         }
     };
 

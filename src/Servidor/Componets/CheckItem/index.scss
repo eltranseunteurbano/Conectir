@@ -33,4 +33,16 @@
             border: 2px solid #8F8F8F;
         }
     }
+
+    &__complete{
+        background: #ECFFEC;
+        hr {
+            border: 2px solid #41D10E;
+        }
+
+        &__title{
+            color: #41D10E !important;
+            text-align: center;
+        }
+    }
 }

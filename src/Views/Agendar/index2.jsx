@@ -1,6 +1,6 @@
 /* eslint-disable prefer-const */
 import React from 'react';
-import './index.scss';
+import './index2.scss';
 
 import Calendar from '../../Components/Calendar';
 import Input from '../../Elements/Input';
@@ -8,8 +8,14 @@ import Button from '../../Elements/Button';
 
 import { HourRejected } from '../../assets/js/Alerts';
 import * as Route from '../../assets/js/Routes';
+import { useSelector, useDispatch } from 'react-redux';
+import { actions } from '../../redux/actions';
 
-const Agendar = () => {
+const S_Agendar = () => {
+
+  var store = useSelector((s) => s)
+  var dispatch = useDispatch();
+  
   const dateNow = new Date();
 
   const [dateSelected, setDateSelected] = React.useState();
@@ -42,42 +48,43 @@ const Agendar = () => {
   };
 
   return (
-    <main className="AgendaView">
-      <div className="AgendaView__header">
-        <h1>Comparte tu equipo</h1>
+    <main className="S_AgendaView">
+      <div className="S_AgendaView__header">
+        <h1>Agenda un día</h1>
         <p>
-          Cuéntanos en qué horario puedes prestar tu equipo. Selecciona uno o
-          varios bloques de horas, y escoge si aplicarlos a un sólo día o
-          repetir en varios.
+          Ahora que has cumplido con cada uno de los pasos sugeridos para proteger tu equipo, un asesor técnico se conectará contigo para validar que todo esté en orden. Selecciona el día que tengas disponible.
         </p>
       </div>
-      <article className="AgendaView__wrapper">
-        <div className="AgendaView__wrapper__calendar">
+      <article className="S_AgendaView__wrapper">
+        <div className="S_AgendaView__wrapper__calendar">
           <Calendar shadow={false} onChangeValue={onChangeDate} />
         </div>
-        <div className="AgendaView__wrapper__body">
-          <div className="AgendaView__wrapper-hours">
+        <div className="S_AgendaView__wrapper__body">
+          <div className="S_AgendaView__wrapper-hours">
             <h2>Selecciona la hora</h2>
             <Input title="Hora de inicio" type="time" value={startHour} exportValue={checkStartHour} />
             <Input title="Hora de final" type="time" value={endHour} exportValue={checkEndHour} />
           </div>
-          <div className="AgendaView__wrapper-cards">
+          <div className="S_AgendaView__wrapper-cards">
             <h2>Seleccionaste</h2>
-            <div className="AgendaView__wrapper-cards__wp">
+            <div className="S_AgendaView__wrapper-cards__wp">
               <p>Aún no has asignado tiempo libre</p>
             </div>
           </div>
         </div>
       </article>
-      <div className="AgendaView-btn">
-        <Button title="Prestar mi equipo" type={dateSelected ? 'active' : 'disabled'} redirect={Route.HOME}/>
+      <div className="S_AgendaView-btn">
+        <Button title="Prestar mi equipo" data="button" type={dateSelected ? 'active' : 'disabled'} redirect={Route.SERVIDOR.CHECK}
+          onClick={() => {
+            dispatch({ type: actions.checkStepCurrent, payload: store.process + 1 });
+          }} />
       </div>
 
     </main>
   );
 };
 
-export default Agendar;
+export default S_Agendar;
 
 
 

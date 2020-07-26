@@ -1,7 +1,7 @@
 import React from "react";
 import S_Header from "../../Componets/Header";
 import S_Body from "../../Componets/Body";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import S_CheckItem from "../../Componets/CheckItem";
 import StepContext from "../../Constans/StepContext";
 
@@ -9,6 +9,9 @@ import "./index.scss";
 import Input from "../../../Elements/Input";
 import { useState } from "react";
 import Button from "../../../Elements/Button";
+import S_Agendar from "../../../Views/Agendar/index2";
+import * as Routes from "../../../assets/js/Routes";
+import { actions } from "../../../redux/actions";
 
 const S_CheckStep = () => {
 
@@ -16,11 +19,10 @@ const S_CheckStep = () => {
 
     var process = store.process - 1;
 
-
     return <>
         <S_Header />
         <S_Body>
-            <div className="S_CheckStep">
+            <div className={process < 3 ? "S_CheckStep" : "S_CheckStep S_CheckStep__finish"}>
                 <div className="S_CheckStep__step">
                     <StepContext.Consumer >{
                         stepManager => {
@@ -53,16 +55,27 @@ const S_CheckStep = () => {
 
 export default S_CheckStep;
 
-const Navegation = ({ next, back }) => {
+const Navegation = ({ next, back,
+    condNext = () => { return true },
+    condRedirectBack = () => { return true },
+    condRedirectNext = () => { return true }
+}) => {
     return <div className="S_CheckStep__navegation">
         <div onClick={back}>
-            <Button title="Regresar" type="secundary" data="default" />
+            <Button
+                title="Regresar"
+                type="secundary"
+                data="default"
+                redirect={Routes.SERVIDOR.CHECK}
+                redirectCondicion={condRedirectBack} />
         </div>
 
         <div onClick={next}>
             <Button title="Continuar"
-                type={"active"}
-                data='default' />
+                type={condNext() ? "active" : "disabled"}
+                data='default'
+                redirect={Routes.SERVIDOR.CHECK}
+                redirectCondicion={condRedirectNext} />
         </div>
     </div>
 }
@@ -70,11 +83,15 @@ const Navegation = ({ next, back }) => {
 
 const S_Step_1 = () => {
 
-    const [procesador, setProcesador] = useState("Intel Core i7 9750H");
-    const [ram, setRam] = useState("24 GB");
-    const [sistema, setSistema] = useState("Windows 10 Pro");
-    const [video, setVideo] = useState("Nvidia RTX 2080");
-    const [alamcenamiento, setAlmacenamiento] = useState("440 GB");
+    var store = useSelector((s) => s)
+    var dispatch = useDispatch();
+
+    const [procesador, setProcesador] = useState("");
+    const [ram, setRam] = useState("");
+    const [sistema, setSistema] = useState("");
+    const [video, setVideo] = useState("");
+    const [alamcenamiento, setAlmacenamiento] = useState("");
+
     const [programs, setPrograms] = useState([
         { name: "Adobe Full Suite", value: false },
         { name: "Photoshop", value: false },
@@ -121,17 +138,17 @@ const S_Step_1 = () => {
         }
     }
 
-    const checkProgram = (event, name) => {
-        var programsTemp = programs;
-        programsTemp["Adobe Full Suite"] = event.target.checked;
-        setPrograms(programsTemp)
-    }
-
     const viewStep_1 = <>
         <div className="S_CheckStep__container__title">
-            <h2>1/3</h2>
-            <h1>Características de mi equipo</h1>
-            <p>Aquí deberás completar las características con las cuales cuenta tu computador para determinar a qué tipo de estudiante podría servir</p>
+            <div className="S_CheckStep__container__title__info">
+                <h2>1/3</h2>
+                <h1>Características de mi equipo</h1>
+                <p>Aquí deberás completar las características con las cuales cuenta tu computador para determinar a qué tipo de estudiante podría servir</p>
+            </div>
+            <div className="S_CheckStep__container__title__help">
+                <HelpAd />
+            </div>
+
         </div>
         <div className="S_CheckStep__container__information">
 
@@ -171,9 +188,14 @@ const S_Step_1 = () => {
 
     const viewStep_2 = <>
         <div className="S_CheckStep__container__title">
-            <h2>2/3</h2>
-            <h1>Programas que tengo instalados</h1>
-            <p>Selecciona los programas que tiene instalado tu equipo</p>
+            <div className="S_CheckStep__container__title__info">
+                <h2>2/3</h2>
+                <h1>Programas que tengo instalados</h1>
+                <p>Selecciona los programas que tiene instalado tu equipo</p>
+            </div>
+            <div className="S_CheckStep__container__title__help">
+
+            </div>
         </div>
         <div className="S_CheckStep__container__information">
             <div className="S_CheckStep__content__programs">
@@ -195,9 +217,14 @@ const S_Step_1 = () => {
 
     const viewStep_3 = <>
         <div className="S_CheckStep__container__title">
-            <h2>3/3</h2>
-            <h1>Uso de tu computador</h1>
-            <p>Queremos conocer un poco más sobre el uso que le das a tu computador, estas preguntas no son obligatorias.</p>
+            <div className="S_CheckStep__container__title__info">
+                <h2>3/3</h2>
+                <h1>Uso de tu computador</h1>
+                <p>Queremos conocer un poco más sobre el uso que le das a tu computador, estas preguntas no son obligatorias.</p>
+            </div>
+            <div className="S_CheckStep__container__title__help">
+
+            </div>
         </div>
         <div className="S_CheckStep__container__information">
             <div className="S_CheckStep__content__information__use">
@@ -234,7 +261,34 @@ const S_Step_1 = () => {
                         page === 3 ? viewStep_3 : <></>}
             </div>
 
-            <Navegation next={next} back={goBack} />
+            <Navegation
+                next={next}
+                back={goBack}
+                condRedirectBack={() => { return page === 1 }}
+                condRedirectNext={() => {
+                    if (page === 3) {
+                        dispatch({ type: actions.checkStepCurrent, payload: store.process + 1 });
+                        return true;
+                    }
+                    return false;
+                }}
+                condNext={() => {
+                    if (page === 1) {
+                        return procesador !== "" &&
+                            ram !== "" &&
+                            sistema !== "" &&
+                            video !== "" &&
+                            alamcenamiento !== ""
+                    } else if (page == 3) {
+                        return whatUse !== "" &&
+                            whatSecondUse !== "" &&
+                            whenUse !== "" &&
+                            whenInit !== ""
+                    } else {
+                        return true;
+                    }
+                }}
+            />
         </>
     )
 }
@@ -243,73 +297,108 @@ const S_Step_1 = () => {
 
 const S_Step_2 = () => {
 
+    var store = useSelector((s) => s)
+    var dispatch = useDispatch();
+
     const [page, setPage] = useState(1);
+    const [virtual, setVirtual] = useState("");
 
     const goBack = () => {
         if (page - 1 > 0) {
-            setPage(page - 1);
+            if (virtual === "VirtualBox" && page === 2.5) {
+                setPage(page - 1.5);
+            } else if (virtual === "VirtualBox" && page === 3) {
+                setPage(page - .5);
+            } else {
+                setPage(page - 1);
+            }
         }
     }
 
     const next = () => {
-        if (page + 1 <= 3) {
-            setPage(page + 1);
+        if (page + 1 <= 3.5) {
+
+            if (virtual === "VirtualBox" && page === 1) {
+                setPage(page + 1.5);
+            } else if (virtual === "VirtualBox" && page === 2.5) {
+                setPage(page + .5);
+            } else {
+                setPage(page + 1);
+            }
+
         }
     }
 
     const step_1 = <>
 
         <div className="S_CheckStep__container__title">
-            <h2>1/3</h2>
-            <h1>Opciones de para protegerte</h1>
-            <p>Escoge una de las opciones que quieras instalar para proteger correctamente tus archivos, de este modo ningún estudiante podrá tener acceso a tus archivos privados.</p>
+            <div className="S_CheckStep__container__title__info">
+                <h2>1/3</h2>
+                <h1>Opciones de para protegerte</h1>
+                <p>Escoge una de las opciones que quieras instalar para proteger correctamente tus archivos, de este modo ningún estudiante podrá tener acceso a tus archivos privados.</p>
+            </div>
+            <div className="S_CheckStep__container__title__help">
+                <HelpAd title="¿Necesitas ayuda?" />
+            </div>
         </div>
-        <div className="S_CheckStep__container__information">
+        <div className="S_CheckStep__container__information row">
 
+            <Input name="machine" type="image" src="/Images/servidor/icons/sandbox.png" title="SandBox" exportValue={() => { setVirtual("SandBox") }} defaultValue={virtual === "SandBox" ? true : false} />
+
+            <Input name="machine" type="image" src="/Images/servidor/icons/virtualbox.png" title="VirtualBox"
+                exportValue={() => { setVirtual("VirtualBox") }}
+                defaultValue={virtual === "VirtualBox" ? true : false} />
         </div>
     </>
 
     const step_2_1 = <>
         <div className="S_CheckStep__container__title">
-            <h2>2/3</h2>
-            <h1>Instalación de SandBox</h1>
-            <p>A continuación encontrarás unos pasos que debes seguir para instalar correctamente SandBox.</p>
+            <div className="S_CheckStep__container__title__info">
+                <h2>2/3</h2>
+                <h1>Instalación de SandBox</h1>
+                <p>A continuación encontrarás unos pasos que debes seguir para instalar correctamente SandBox.</p>
+            </div>
+            <div className="S_CheckStep__container__title__help">
+                <HelpAd title="¿Necesitas ayuda?" />
+            </div>
         </div>
-        <div className="S_CheckStep__container__information">
-            <ol>
+        <div className="S_CheckStep__container__information row">
+            <ol className="S_CheckStep__description">
                 <li>Antes de empezar, debes tener en cuenta que SandBox sólo funciona en Windows 10 Home.</li>
                 <li>Ingresa a Programas y Características de tu equipo, luego das click al texto de “Activar o Desactivar Características de Windows.</li>
-                <li>
-                    Selecciona validar “Espacio Aislado de Windows” o “Windows SandBox”.
-            </li>
-                <li>
-                    Abre SandBox, allí podrás instalar los programas que quieres prestarle a otros estudiantes para acceder mediante tu equipo. Recuerda: Si cierras la pestaña de SandBox se perderán todos los archivos y e instalaciones realizadas.
-            </li>
+                <li>Selecciona validar “Espacio Aislado de Windows” o “Windows SandBox”.</li>
+                <li>Abre SandBox, allí podrás instalar los programas que quieres prestarle a otros estudiantes para acceder mediante tu equipo. Recuerda: Si cierras la pestaña de SandBox se perderán todos los archivos y e instalaciones realizadas.</li>
             </ol>
-
-
+            <div className="S_CheckStep__preview">
+                <img src="/Images/servidor/icons/sandbox-preview.png" alt="" />
+            </div>
         </div >
     </>
 
     const step_2_2 = <>
-        <div className="S_CheckStep__container__title">
-            <h2>2/3</h2>
-            <h1>Instalación de SandBox</h1>
-            <p>A continuación encontrarás unos pasos que debes seguir para instalar correctamente VirtualBox.</p>
-        </div>
-        <div className="S_CheckStep__container__information">
-            <ol>
-                <li>Ingresa a /www.virtualbox.org/wiki/Downloads o haz click aquí para abrir la página web y descarga VirtualBox de acuerdo a tus sistema operativo (Windows, Mac Os).</li>
-                <li>Una vez hayas descargado VirtualBox, abre el programa para instalarlo en tu equipo siguiendo las configuraciones predeterminadas con el botón next. </li>
-                <li>
-                    Te recomendamos seguir las indicaciones que encontrarás en este vídeo para que no te pierdas instalando VirtualBox en
-                <a href="https://www.youtube.com/watch?v=jos3MTgIBJE" target="_blank" rel="noopener noreferrer">https://www.youtube.com/watch?v=jos3MTgIBJE</a>
 
-                </li>
-                <li>
-                    Una vez hayas terminado los procesos, dale click en iniciar e instala todo lo necesario para prestar tu equipo blindado.
-    </li>
+        <div className="S_CheckStep__container__title">
+            <div className="S_CheckStep__container__title__info">
+                <h2>2/3</h2>
+                <h1>Instalación de VirtualBox</h1>
+                <p>A continuación encontrarás unos pasos que debes seguir para instalar correctamente VirtualBox.</p>
+            </div>
+            <div className="S_CheckStep__container__title__help">
+                <HelpAd title="¿Necesitas ayuda?" />
+            </div>
+        </div>
+        <div className="S_CheckStep__container__information row">
+            <ol className="S_CheckStep__description">
+
+                <li>Ingresa a <a href="http://www.virtualbox.org/wiki/Downloads" target="_blank" rel="noopener noreferrer">http://www.virtualbox.org/wiki/Downloads</a> o haz click aquí para abrir la página web y descarga VirtualBox de acuerdo a tus sistema operativo (Windows, Mac Os).</li>
+                <li>Una vez hayas descargado VirtualBox, abre el programa para instalarlo en tu equipo siguiendo las configuraciones predeterminadas con el botón next. </li>
+                <li>Te recomendamos seguir las indicaciones que encontrarás en este vídeo para que no te pierdas instalando VirtualBox en
+                <a href="https://www.youtube.com/watch?v=jos3MTgIBJE" target="_blank" rel="noopener noreferrer">https://www.youtube.com/watch?v=jos3MTgIBJE</a></li>
+                <li>Una vez hayas terminado los procesos, dale click en iniciar e instala todo lo necesario para prestar tu equipo blindado.</li>
             </ol>
+            <div className="S_CheckStep__preview">
+                <img src="/Images/servidor/icons/virtualbox-preview.png" alt="" />
+            </div>
 
 
         </div>
@@ -318,13 +407,18 @@ const S_Step_2 = () => {
 
     const step_3 = <>
         <div className="S_CheckStep__container__title">
-            <h2>3/3</h2>
-            <h1>Instala TeamViewer</h1>
-            <p>Ahora que has blindado tu equipo, debes instalar TeamViewer para que los estudiantes accedan remotamente a tu equipo</p>
+            <div className="S_CheckStep__container__title__info">
+                <h2>3/3</h2>
+                <h1>Instala TeamViewer</h1>
+                <p>Ahora que has blindado tu equipo, debes instalar TeamViewer para que los estudiantes accedan remotamente a tu equipo</p>
+            </div>
+            <div className="S_CheckStep__container__title__help">
+                <HelpAd title="¿Necesitas ayuda?" />
+            </div>
         </div>
 
-        <div className="S_CheckStep__container__information">
-            <ol>
+        <div className="S_CheckStep__container__information row">
+            <ol className="S_CheckStep__description">
                 <li>Descarga TeamViewer en el siguiente enlace:<span> </span>
                     <a href="https://www.teamviewer.com/" target="_blank" rel="noopener noreferrer">https://www.teamviewer.com/</a>
                 </li>
@@ -333,7 +427,9 @@ const S_Step_2 = () => {
                 </li>
                 <li>Cuando vayas a prestar un equipo, te pediremos tu ID y Contraseña que podrás ver en TeamViewer para que los estudiantes se puedan concectar.</li>
             </ol>
-
+            <div className="S_CheckStep__preview">
+                <img src="/Images/servidor/icons/teamviewer.png" alt="" />
+            </div>
         </div>
     </>
 
@@ -347,13 +443,26 @@ const S_Step_2 = () => {
             }
         </div>
 
-        <Navegation next={next} back={goBack} />
+        <Navegation next={next} back={goBack}
+            condRedirectNext={() => {
+                if (page === 3) {
+                    dispatch({ type: actions.checkStepCurrent, payload: store.process + 1 });
+                    return true;
+                }
+                return false;
+            }}
+            condBack={() => { return page === 1 }}
+            condNext={() => { return virtual !== "" }}
+        />
 
     </>
 }
 
 
 const S_Step_3 = () => {
+
+    var store = useSelector((s) => s)
+    var dispatch = useDispatch();
 
     const [page, setPage] = useState(1);
 
@@ -369,7 +478,20 @@ const S_Step_3 = () => {
         }
     }
 
-    return <div>
+    return <article>
+        <S_Agendar />
+    </article>
+}
 
-    </div>
+const HelpAd = ({ title = "¿No sabes dónde encontrar esta información?" }) => {
+    return <article className="HelpAd">
+        <div>
+            <p>{title}</p>
+        </div>
+        <div>
+            <p>
+                <a href="#">Ingresa aquí</a>
+            </p>
+        </div>
+    </article>
 }
