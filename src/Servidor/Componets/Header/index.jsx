@@ -14,7 +14,7 @@ const S_Header = () => {
 
         <div>
             <Link to={Routes.SERVIDOR.HOME} className="S_Link">Ayuda</Link>
-            <Link to={Routes.SERVIDOR.HOME} className="S_Link">Salir</Link>
+            <Link to={Routes.INDEX} className="S_Link">Salir</Link>
         </div>
     </div>
 }

@@ -56,11 +56,15 @@ const Register = (props) => {
 	const register = () => {
 
 		if (check) {
-			User.createUserDatabase(null, email, "local", password, () => {
-				User.createInformation(name, lastName, user, check);
-			})
-			if (User.uid !== "") {
-				User.createInformation(name, lastName, user, check);
+
+			if (type === "") {
+				User.createUserDatabase(null, email, "local", password, () => {
+					User.createInformation(name, lastName, user, check);
+				})
+			} else {
+				if (User.uid !== "") {
+					User.createInformation(name, lastName, user, check);
+				}
 			}
 		}
 
@@ -225,7 +229,7 @@ const register = async () => {
 								<Button title="Registrar"
 									type={user === 'student' ? name !== "" && lastName !== "" && email !== "" && check ? 'active' : 'disabled'
 										: user === 'honor' ? name !== "" && lastName !== "" && email !== "" && check ? 'active' : 'disabled' : ''}
-									data='default' />
+									data='default' redirect={Routes.HOME} />
 							</div>
 						</div>
 

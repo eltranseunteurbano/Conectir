@@ -156,8 +156,6 @@ class user_firebase {
 
         if (uid === null) {
 
-
-
             this.register(email, pass).then((userdata) => {
 
 

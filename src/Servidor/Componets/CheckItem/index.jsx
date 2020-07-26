@@ -12,7 +12,8 @@ import "./index.scss";
 import { useDispatch } from "react-redux";
 import { actions } from "../../../redux/actions";
 
-const S_CheckItem = ({ description = "Descripcion", status = "disabled", orden = 0, action = "Comenzar", view = "default" }) => {
+const S_CheckItem = ({ description = "Descripcion", status = "disabled", orden = 0, action = "Comenzar", view = "default",
+    onRedirect = () => { } }) => {
 
     var dispatch = useDispatch();
     var icon = <I_Display status={status} />;
@@ -36,6 +37,8 @@ const S_CheckItem = ({ description = "Descripcion", status = "disabled", orden =
     }
 
     const onClick = () => {
+        onRedirect();
+   
         dispatch({ type: actions.checkStepCurrent, payload: parseInt(orden) })
     }
 
@@ -47,7 +50,7 @@ const S_CheckItem = ({ description = "Descripcion", status = "disabled", orden =
         {icon}
         <div className="button__choose">
             {view === "default" && status !== "complete" ?
-                <Button data="button" onClick={onClick} type={(status === "disabled" ? status : "active")} title={action} redirect={Routes.SERVIDOR.STEP} /> :
+                <Button data="button" onClick={onClick} type={(status === "disabled" ? status : "active")} title={action} /*redirect={Routes.SERVIDOR.STEP}*/ /> :
                 <>{status === "complete" && <h1 className="S_CheckItem__complete__title">Completado
                     </h1>}</>
             }

@@ -11,11 +11,11 @@ import * as Route from '../../assets/js/Routes';
 import { useSelector, useDispatch } from 'react-redux';
 import { actions } from '../../redux/actions';
 
-const S_Agendar = () => {
+const S_Agendar = ({ solicitud, setSolicitud, setPag }) => {
 
   var store = useSelector((s) => s)
   var dispatch = useDispatch();
-  
+
   const dateNow = new Date();
 
   const [dateSelected, setDateSelected] = React.useState();
@@ -76,7 +76,15 @@ const S_Agendar = () => {
       <div className="S_AgendaView-btn">
         <Button title="Prestar mi equipo" data="button" type={dateSelected ? 'active' : 'disabled'} redirect={Route.SERVIDOR.CHECK}
           onClick={() => {
+            var result = solicitud;
+            result.horario = {
+              dateSelected: dateSelected,
+              startHour: startHour,
+              endHour: endHour
+            }
+            setSolicitud(result);
             dispatch({ type: actions.checkStepCurrent, payload: store.process + 1 });
+            setPag(1)
           }} />
       </div>
 

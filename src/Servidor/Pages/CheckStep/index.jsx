@@ -12,16 +12,16 @@ import Button from "../../../Elements/Button";
 import S_Agendar from "../../../Views/Agendar/index2";
 import * as Routes from "../../../assets/js/Routes";
 import { actions } from "../../../redux/actions";
+import Database, { routes_database } from "../../../constants/firebase/database/database";
 
-const S_CheckStep = () => {
+const S_CheckStep = ({ solicitud, setSolicitud, setPag }) => {
 
     var store = useSelector((s) => s)
 
     var process = store.process - 1;
 
     return <>
-        <S_Header />
-        <S_Body>
+       
             <div className={process < 3 ? "S_CheckStep" : "S_CheckStep S_CheckStep__finish"}>
                 <div className="S_CheckStep__step">
                     <StepContext.Consumer >{
@@ -40,15 +40,15 @@ const S_CheckStep = () => {
 
                 </div>
                 <div className="S_CheckStep__container">
-                    {process === 0 ? <S_Step_1 /> :
-                        process === 1 ? <S_Step_2 /> :
-                            process === 2 ? <S_Step_3 /> : <></>
+                    {process === 0 ? <S_Step_1 solicitud={solicitud} setSolicitud={setSolicitud} setPag={setPag} /> :
+                        process === 1 ? <S_Step_2 solicitud={solicitud} setSolicitud={setSolicitud} setPag={setPag} /> :
+                            process === 2 ? <S_Step_3 solicitud={solicitud} setSolicitud={setSolicitud} setPag={setPag} /> : <></>
                     }
 
                 </div>
 
             </div>
-        </S_Body>
+    
 
     </>
 }
@@ -81,7 +81,7 @@ const Navegation = ({ next, back,
 }
 
 
-const S_Step_1 = () => {
+const S_Step_1 = ({ solicitud, setSolicitud, setPag }) => {
 
     var store = useSelector((s) => s)
     var dispatch = useDispatch();
@@ -264,10 +264,53 @@ const S_Step_1 = () => {
             <Navegation
                 next={next}
                 back={goBack}
-                condRedirectBack={() => { return page === 1 }}
+                condRedirectBack={() => {
+                    if (page === 1) {
+                        setPag(1);
+                        return true
+                    }
+                    return false
+                }}
                 condRedirectNext={() => {
                     if (page === 3) {
+                        var result = solicitud;
+                        result.caracteristicas = {
+                            procesador: procesador,
+                            ram: ram,
+                            sistema: sistema,
+                            video: video,
+                            almacenamiento: alamcenamiento
+                        }
+                        result.programs = [];
+                        programs.forEach((p) => {
+                            if (p.value === true) {
+                                result.programs.push(p);
+                            }
+                        })
+                        result.questions = [];
+                        result.questions.push({
+                            title: "¿Hace cuánto compraste tu computador?",
+                            result: whenInit
+                        })
+
+                        result.questions.push({
+                            title: "Actividad que más haces",
+                            result: whatUse
+                        })
+
+                        result.questions.push({
+                            title: "¿Cuánto tiempo pasas en tu computador?",
+                            result: whenUse
+                        })
+
+                        result.questions.push({
+                            title: "Actividad secundaria típica",
+                            result: whatSecondUse
+                        })
+
+                        setSolicitud(result)
                         dispatch({ type: actions.checkStepCurrent, payload: store.process + 1 });
+                        setPag(1);
                         return true;
                     }
                     return false;
@@ -295,7 +338,7 @@ const S_Step_1 = () => {
 
 
 
-const S_Step_2 = () => {
+const S_Step_2 = ({ solicitud, setSolicitud, setPag }) => {
 
     var store = useSelector((s) => s)
     var dispatch = useDispatch();
@@ -446,12 +489,20 @@ const S_Step_2 = () => {
         <Navegation next={next} back={goBack}
             condRedirectNext={() => {
                 if (page === 3) {
+                    var result = solicitud;
+                    result.virtualMachine = virtual;
                     dispatch({ type: actions.checkStepCurrent, payload: store.process + 1 });
+                    setPag(1);
                     return true;
                 }
                 return false;
             }}
-            condBack={() => { return page === 1 }}
+            condBack={() => {
+                if (page === 1) {
+                    setPag(1);
+                    return true;
+                } return false
+            }}
             condNext={() => { return virtual !== "" }}
         />
 
@@ -459,7 +510,7 @@ const S_Step_2 = () => {
 }
 
 
-const S_Step_3 = () => {
+const S_Step_3 = ({ solicitud, setSolicitud, setPag }) => {
 
     var store = useSelector((s) => s)
     var dispatch = useDispatch();
@@ -479,7 +530,7 @@ const S_Step_3 = () => {
     }
 
     return <article>
-        <S_Agendar />
+        <S_Agendar solicitud={solicitud} setSolicitud={setSolicitud} setPag={setPag} />
     </article>
 }
 
