@@ -5,32 +5,32 @@ import GifCard from './GifCard';
 const data = [
   {
     title: 'Disfruta un domicilio gratis con Rappi',
-    img: '/images/points/rappi.png',
+    img: '/Images/points/rappi.png',
     company: 'rappi',
     id: 1
   }, {
     title: 'Obten 50% descuento en Frutas y Verduras del Exito',
-    img: '/images/points/exito.png',
+    img: '/Images/points/exito.png',
     company: 'exito',
     id: 2
   }, {
     title: '20% juegos para jugar en casa con tu familia',
-    img: '/images/points/uno.png',
+    img: '/Images/points/uno.png',
     company: 'uno',
     id: 3
   }, {
     title: 'Disfruta un domicilio gratis con Rappi',
-    img: '/images/points/rappi.png',
+    img: '/Images/points/rappi.png',
     company: 'rappi',
     id: 14
   }, {
     title: 'Obten 50% descuento en Frutas y Verduras del Exito',
-    img: '/images/points/exito.png',
+    img: '/Images/points/exito.png',
     company: 'exito',
     id: 5
   }, {
     title: '20% juegos para jugar en casa con tu familia',
-    img: '/images/points/uno.png',
+    img: '/Images/points/uno.png',
     company: 'uno',
     id: 6
   }
@@ -38,7 +38,7 @@ const data = [
 
 const Points = () => (
   <article className="Points">
-    <h1 className="Points__title">Cuentas con 50 puntos</h1>
+    <h1 className="Points__title">Cuentas con 0 puntos</h1>
 
     <article className="Points__wp">
       {

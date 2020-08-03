@@ -1,5 +1,5 @@
 /* eslint-disable prefer-const */
-import React from 'react';
+import React, { useState } from 'react';
 import './index2.scss';
 
 import Calendar from '../../Components/Calendar';
@@ -10,17 +10,31 @@ import { HourRejected } from '../../assets/js/Alerts';
 import * as Route from '../../assets/js/Routes';
 import { useSelector, useDispatch } from 'react-redux';
 import { actions } from '../../redux/actions';
+import User from '../../constants/firebase/user/user';
+import emailjs from "emailjs-com";
 
 const S_Agendar = ({ solicitud, setSolicitud, setPag }) => {
 
   var store = useSelector((s) => s)
   var dispatch = useDispatch();
 
+
   const dateNow = new Date();
 
   const [dateSelected, setDateSelected] = React.useState();
+  const [daySelect, setDaySelect] = useState("");
 
   const onChangeDate = date => {
+    var today = new Date(date);
+
+    let options = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    };
+
+    setDaySelect(today.toLocaleDateString('es-MX', options))
+
     setDateSelected({ date });
   };
 
@@ -47,6 +61,43 @@ const S_Agendar = ({ solicitud, setSolicitud, setPag }) => {
     }
   };
 
+  const agendar = (load) => {
+
+    var templateParams = {
+      toEmail: User.email,
+      subject: "Reserva de equipos",
+      message_html: `
+      <h3>Hola, ${User.information.name} ${User.information.lastName}</h3>
+      <h2>¡Felicidades!</h2>
+      <p>Tu equipo ha sido agendado por un estudiante.</p>
+      <h3>Fecha: ${daySelect}</h3>
+      <h3>Hora: ${startHour}</h3>
+      <p>Recuerda: Debes enviarnos los credenciales para ingresar a tu equipo una hora antes de su uso. No te preocupes, nosotros te recordaremos.</p>
+    
+      <h3>Equipo Conectir</h3>
+    
+      <p>Instagram: @conectir</p>
+      <p>contacto@conectir.com</p>
+      <p><a href="https://conectir.com/">www.conectir.com/</a></p>
+    
+    
+    `
+    };
+
+    const YOUR_SERVICE_ID = "conectiremail";
+    const YOUR_TEMPLATE_ID = "template_sjCFNfqb";
+
+    emailjs.send(YOUR_SERVICE_ID, YOUR_TEMPLATE_ID, templateParams)
+      .then(function (response) {
+        alert("Su solicitud fue enviada con exito")
+        load && load();
+        console.log('SUCCESS!', response.status, response.text);
+      }, function (error) {
+        console.log('FAILED...', error);
+      });
+
+  }
+
   return (
     <main className="S_AgendaView">
       <div className="S_AgendaView__header">
@@ -68,13 +119,25 @@ const S_Agendar = ({ solicitud, setSolicitud, setPag }) => {
           <div className="S_AgendaView__wrapper-cards">
             <h2>Seleccionaste</h2>
             <div className="S_AgendaView__wrapper-cards__wp">
-              <p>Aún no has asignado tiempo libre</p>
+              {daySelect === "" ?
+                <p>Aún no has asignado tiempo libre</p>
+                :
+                <>
+                  <div>
+                    <p>{daySelect}</p>
+                  </div>
+                  <div style={{ marginTop: "20px" }}>
+                    <p>{startHour} - {endHour}</p>
+                  </div>
+
+                </>
+              }
             </div>
           </div>
         </div>
       </article>
       <div className="S_AgendaView-btn">
-        <Button title="Prestar mi equipo" data="button" type={dateSelected ? 'active' : 'disabled'} redirect={Route.SERVIDOR.CHECK}
+        <Button title="Agendar cita con asesor" data="button" type={dateSelected ? 'active' : 'disabled'} redirect={Route.SERVIDOR.CHECK}
           onClick={() => {
             var result = solicitud;
             result.horario = {
@@ -83,8 +146,11 @@ const S_Agendar = ({ solicitud, setSolicitud, setPag }) => {
               endHour: endHour
             }
             setSolicitud(result);
-            dispatch({ type: actions.checkStepCurrent, payload: store.process + 1 });
-            setPag(1)
+            agendar(() => {
+              dispatch({ type: actions.checkStepCurrent, payload: store.process + 1 });
+              setPag(1)
+            })
+
           }} />
       </div>
 

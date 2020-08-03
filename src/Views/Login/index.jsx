@@ -25,7 +25,9 @@ const Login = () => {
     const [r_home, serR_home] = React.useState(false);
 
     const loginIn = () => {
-        User.login(email, password)
+        User.login(email, password, ()=>{
+            serR_home(true);
+        })
     }
 
     useEffect(() => {
@@ -56,7 +58,7 @@ const Login = () => {
 
                 <Input title="Correo" type="email" placeholder="Escribe aquí tu correo" exportValue={setEmail} />
                 <Input title="Contraseña" type="password" placeholder="Escribe aquí tu contraseña" exportValue={setPassword} />
-                <Button title="Ingresar" type={email !== "" && password !== "" ? "active" : "disabled"} data="button" onClick={loginIn} redirect={Routes.HOME} />
+                <Button title="Ingresar" type={email !== "" && password !== "" ? "active" : "disabled"} data="button" onClick={loginIn} />
                 <Button title="Continuar con GitHub" data="github" redirect={Routes.HOME} />
 
                 <h2 className="Login__form__register">¿Aún no tienes una cuenta? <Link to={Routes.REGISTER} onClick={() => { serR_register(true) }}>Regístrate</Link> </h2>

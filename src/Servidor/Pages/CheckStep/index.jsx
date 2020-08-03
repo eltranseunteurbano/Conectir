@@ -21,34 +21,34 @@ const S_CheckStep = ({ solicitud, setSolicitud, setPag }) => {
     var process = store.process - 1;
 
     return <>
-       
-            <div className={process < 3 ? "S_CheckStep" : "S_CheckStep S_CheckStep__finish"}>
-                <div className="S_CheckStep__step">
-                    <StepContext.Consumer >{
-                        stepManager => {
-                            var step = stepManager.steps[process];
 
-                            return <S_CheckItem
-                                status="active"
-                                orden={step.orden}
-                                description={step.description}
-                                action={step.action}
-                                view="view"
-                            />
-                        }
-                    }</StepContext.Consumer>
+        <div className={process < 3 ? "S_CheckStep" : "S_CheckStep S_CheckStep__finish"}>
+            <div className="S_CheckStep__step">
+                <StepContext.Consumer >{
+                    stepManager => {
+                        var step = stepManager.steps[process];
 
-                </div>
-                <div className="S_CheckStep__container">
-                    {process === 0 ? <S_Step_1 solicitud={solicitud} setSolicitud={setSolicitud} setPag={setPag} /> :
-                        process === 1 ? <S_Step_2 solicitud={solicitud} setSolicitud={setSolicitud} setPag={setPag} /> :
-                            process === 2 ? <S_Step_3 solicitud={solicitud} setSolicitud={setSolicitud} setPag={setPag} /> : <></>
+                        return <S_CheckItem
+                            status="active"
+                            orden={step.orden}
+                            description={step.description}
+                            action={step.action}
+                            view="view"
+                        />
                     }
-
-                </div>
+                }</StepContext.Consumer>
 
             </div>
-    
+            <div className="S_CheckStep__container">
+                {process === 0 ? <S_Step_1 solicitud={solicitud} setSolicitud={setSolicitud} setPag={setPag} /> :
+                    process === 1 ? <S_Step_2 solicitud={solicitud} setSolicitud={setSolicitud} setPag={setPag} /> :
+                        process === 2 ? <S_Step_3 solicitud={solicitud} setSolicitud={setSolicitud} setPag={setPag} /> : <></>
+                }
+
+            </div>
+
+        </div>
+
 
     </>
 }
@@ -146,7 +146,7 @@ const S_Step_1 = ({ solicitud, setSolicitud, setPag }) => {
                 <p>Aquí deberás completar las características con las cuales cuenta tu computador para determinar a qué tipo de estudiante podría servir</p>
             </div>
             <div className="S_CheckStep__container__title__help">
-                <HelpAd />
+                <HelpAd href="https://www.tuexperto.com/2018/05/20/como-ver-caracteristicas-ordenador-windows-7-10/#:~:text=Para%20ver%20la%20informaci%C3%B3n%20b%C3%A1sica,hacer%20clic%20sobre%20%E2%80%9CSistema%E2%80%9D." />
             </div>
 
         </div>
@@ -229,7 +229,8 @@ const S_Step_1 = ({ solicitud, setSolicitud, setPag }) => {
         <div className="S_CheckStep__container__information">
             <div className="S_CheckStep__content__information__use">
 
-                <Input title="¿Hace cuánto compraste tu computador?"
+                <Input title="¿Hace cuánto compraste tu computador? (en años)"
+                    type="number"
                     value={whenInit}
                     placeholder="1 año"
                     exportValue={setWhenInit} />
@@ -239,7 +240,8 @@ const S_Step_1 = ({ solicitud, setSolicitud, setPag }) => {
                     placeholder="Navegar redes sociales"
                     exportValue={setWhatUse} />
 
-                <Input title="¿Cuánto tiempo pasas en tu computador?"
+                <Input title="¿Cuánto tiempo pasas en tu computador? (en años)"
+                    type="number"
                     value={whenUse}
                     placeholder="1 año"
                     exportValue={setWhenUse} />
@@ -427,7 +429,7 @@ const S_Step_2 = ({ solicitud, setSolicitud, setPag }) => {
                 <p>A continuación encontrarás unos pasos que debes seguir para instalar correctamente VirtualBox.</p>
             </div>
             <div className="S_CheckStep__container__title__help">
-                <HelpAd title="¿Necesitas ayuda?" />
+                <HelpAd title="¿Necesitas ayuda?" mensaje={"Comunícate con nosotros"} />
             </div>
         </div>
         <div className="S_CheckStep__container__information row">
@@ -534,14 +536,14 @@ const S_Step_3 = ({ solicitud, setSolicitud, setPag }) => {
     </article>
 }
 
-const HelpAd = ({ title = "¿No sabes dónde encontrar esta información?" }) => {
+const HelpAd = ({ title = "¿No sabes dónde encontrar esta información?", mensaje = "Ingresa aquí", href = "#" }) => {
     return <article className="HelpAd">
         <div>
             <p>{title}</p>
         </div>
         <div>
             <p>
-                <a href="#">Ingresa aquí</a>
+                <a href={href}>{mensaje}</a>
             </p>
         </div>
     </article>

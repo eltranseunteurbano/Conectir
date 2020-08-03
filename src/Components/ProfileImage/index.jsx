@@ -9,8 +9,8 @@ const ProfileImage = () => {
   const [name, setName] = useState("");
 
   useEffect(() => {
+    setName(User.information.name);
     User.event.getEvent("updateInformation", () => {
-      console.log("Nombre de usuario",User.information.name)
       setName(User.information.name);
     }, "reload")
 

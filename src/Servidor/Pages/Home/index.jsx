@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import S_Header from "../../Componets/Header";
 import S_Body from "../../Componets/Body";
 import Button from "../../../Elements/Button";
@@ -7,10 +7,21 @@ import * as Routes from "../../../assets/js/Routes";
 import "./index.scss";
 import Database, { routes_database } from "../../../constants/firebase/database/database";
 import { database } from "firebase";
+import User from "../../../constants/firebase/user/user";
+import { useState } from "react";
 const S_Home = () => {
 
+    const [name, setName] = useState("Nombre de usuario")
+
+    useEffect(() => {
+        User.event.getEvent("updateInformation", () => {
+            setName(User.information.name +" " + User.information.lastName);
+        }, "reload")
+
+    }, []);
+
     const crearSolicitud = () => {
-        
+
     }
 
     return <>
@@ -18,7 +29,7 @@ const S_Home = () => {
         <S_Body>
             <div className="S_Home">
                 <div>
-                    <h1>Bienvenido, nombre usuario</h1>
+                    <h1>Bienvenido, {name}</h1>
                 </div>
                 <div>
                     <img src="\Images\servidor\icons\icon-computer-seguridad.svg" alt="" />

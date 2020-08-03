@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './index.scss';
 
 import { Link, NavLink, Redirect } from 'react-router-dom';
@@ -17,14 +17,23 @@ const Header = () => {
 
   const [viewOption, setViewOption] = useState(false);
   const [goToLogin, setGoToLogin] = useState(false);
+  const [typeUser, setTypeUser] = useState("");
 
-  const logOut = () => { 
-    User.logout((exit)=>{
-      if(exit){
+  const logOut = () => {
+    User.logout((exit) => {
+      if (exit) {
         setGoToLogin(true);
       }
     });
   }
+
+  useEffect(() => {
+    setTypeUser(User.information.role);
+    User.event.getEvent("updateInformation", () => {
+      setTypeUser(User.information.role);
+    }, "reload")
+
+  }, []);
 
   return (
     <header className="header">
@@ -39,14 +48,21 @@ const Header = () => {
             <span><AiOutlineHome /></span>
           Inicio
         </NavLink>
-          <NavLink to={Routes.AGENDAR} activeClassName="header__content__nav-active">
-            <span><AiOutlineCalendar /></span>
-          Agendar
-        </NavLink>
-          <NavLink to={Routes.BUSCAR} activeClassName="header__content__nav-active">
-            <span><FiSearch /></span>
+          {typeUser !== "student" ?
+            <NavLink to={Routes.AGENDAR} activeClassName="header__content__nav-active">
+              <span><AiOutlineCalendar /></span>
+      Agendar
+    </NavLink>
+            : <></>}
+
+          {typeUser !== "honor" ?
+            <NavLink to={Routes.BUSCAR} activeClassName="header__content__nav-active">
+              <span><FiSearch /></span>
           Buscar
         </NavLink>
+            :
+            <></>
+          }
           <NavLink to={Routes.PUNTOS} activeClassName="header__content__nav-active">
             <span><AiOutlineTag /></span>
           Mis puntos
@@ -54,22 +70,29 @@ const Header = () => {
         </nav>
 
         <div className="header__content__user">
+
           <span className="header__content__user__notification"><AiOutlineBell /></span>
           <div className="header__content__user__profile"
             //  onClick={() => { setViewOption(!viewOption) }}
             onMouseOver={() => { setViewOption(true) }}
             onMouseOut={() => { setViewOption(false) }}
           >
-            <ProfileImage />
-            <span className="header__content__user__down"
+            <div
+              className="header__content__user__profile__user">
+              <ProfileImage />
+              <span className="header__content__user__down">{viewOption ? <AiOutlineUp /> : <AiOutlineDown />}</span>
+            </div>
 
-            >{viewOption ? <AiOutlineUp /> : <AiOutlineDown />}</span>
             <div className="header__content__user__options">
               <ul className="header__content__user__options__list">
                 <li className="header__content__user__options__list__item"
                   onClick={logOut}>Cerrar sessión</li>
               </ul>
             </div>
+            {/**
+             * 
+             * 
+             */}
           </div>
         </div>
       </article>

@@ -79,7 +79,7 @@ const I_Reloj = ({ status }) => {
             view = disabled;
             break;
 
-        case "ready":
+        case "complete":
             view = ready;
             break;
         default:

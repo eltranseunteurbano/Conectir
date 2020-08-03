@@ -8,6 +8,8 @@ import { createStore } from 'redux';
 
 import { FirebaseAppProvider } from 'reactfire';
 
+import emailjs from "emailjs-com";
+
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
@@ -16,14 +18,19 @@ import firebaseConfig from './utils/firebase-config';
 
 const initialState = {
   user: {},
-  process: 1
+  info: "name",
+  process: 1,
+  isComprobateLogin: "wait",
+  goToUrl: "wait"
 }
 
 //Redux debugger en chrome
 const composeEnhancers =
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
 
-const store = createStore(reducer, initialState, composeEnhancers);
+export const store = createStore(reducer, initialState, composeEnhancers);
+
+emailjs.init("user_s4BftO38CcfGdD2CEp5hU");
 
 ReactDOM.render(
   <Provider store={store}>

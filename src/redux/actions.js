@@ -6,6 +6,9 @@ export const actions = {
 
   //Unidad del servidor
   checkStepCurrent: 'CHECK_STEP_CURRRENT',
+  isComprobateLogin: "IS_COMPROBATE_LOGIN",
+  setUserInformation: "SET_USER_INFORMATION",
+  goToUrl: "GO_TO_URL"
 }
 
 
@@ -27,5 +30,21 @@ export const registerStudentRequest = payload => ({
 
 export const checkStepCurrent = payload => ({
   type: actions.checkStepCurrent,
+  payload,
+});
+
+
+export const isComprobateLogin = payload => ({
+  type: actions.isComprobateLogin,
+  payload,
+});
+
+export const setUserInformation = payload => ({
+  type: actions.setUserInformation,
+  payload,
+});
+
+export const goToUrl = payload => ({
+  type: actions.goToUrl,
   payload,
 });

@@ -2,6 +2,7 @@ import React from 'react';
 import './index.scss';
 
 import GifCard from '../../Components/Points/GifCard';
+import Header from '../../Components/Header';
 
 const MyPoints = () => {
   const [filters, setFilters] = React.useState([
@@ -45,82 +46,87 @@ const MyPoints = () => {
 
   const [cupones, setCupones] = React.useState([{
     title: 'Disfruta un domicilio gratis con Rappi',
-    img: '/images/points/rappi.png',
+    img: '/Images/points/rappi.png',
     company: 'rappi',
     id: 1
   }, {
     title: 'Obten 50% descuento en Frutas y Verduras del Exito',
-    img: '/images/points/exito.png',
+    img: '/Images/points/exito.png',
     company: 'exito',
     id: 2
   }, {
     title: '20% juegos para jugar en casa con tu familia',
-    img: '/images/points/uno.png',
+    img: '/Images/points/uno.png',
     company: 'uno',
     id: 3
   }, {
     title: 'Disfruta un domicilio gratis con Rappi',
-    img: '/images/points/rappi.png',
+    img: '/Images/points/rappi.png',
     company: 'rappi',
     id: 14
   }, {
     title: 'Obten 50% descuento en Frutas y Verduras del Exito',
-    img: '/images/points/exito.png',
+    img: '/Images/points/exito.png',
     company: 'exito',
     id: 5
   }, {
     title: '20% juegos para jugar en casa con tu familia',
-    img: '/images/points/uno.png',
+    img: '/Images/points/uno.png',
     company: 'uno',
     id: 6
   }]);
 
   return (
-    <main className="MyPoints">
-      <article className="MyPoints__categorias">
-        <h2>Categorías</h2>
-        <div className="MyPoints__categorias__wp">
-          {
-            filters.map((item) => (
-              <div
-                className={item.active ? 'MyPoints__categorias__wp__item MyPoints__categorias__wp__item-active' : 'MyPoints__categorias__wp__item'}
-                key={item.id}
-              >
-                <div className="MyPoints__categorias__wp__item-box" />
-                <div className="MyPoints__categorias__wp__item-text">{item.name}</div>
-              </div>
-            ))
-          }
-        </div>
-      </article>
-      <article className="MyPoints__cupones">
-        <div className="MyPoints__cupones__header">
-          <h2>Cupones hechos para ti</h2>
-          <div className="MyPoints__cupones__header-points">
-            <p>
-              Cuentas con
+    <>
+      <Header />
+      <main className="MyPoints">
+        <article className="MyPoints__categorias">
+          <h2>Categorías</h2>
+          <div className="MyPoints__categorias__wp">
+            {
+              filters.map((item) => (
+                <label>
+                  <div
+                    className={item.active ? 'MyPoints__categorias__wp__item MyPoints__categorias__wp__item-active' : 'MyPoints__categorias__wp__item'}
+                    key={item.id}
+                  >
+                    <input type="checkbox" className="MyPoints__categorias__wp__item-box" />
+                    <div className="MyPoints__categorias__wp__item-text">{item.name}</div>
+                  </div>
+                </label>
+              ))
+            }
+          </div>
+        </article>
+        <article className="MyPoints__cupones">
+          <div className="MyPoints__cupones__header">
+            <h2>Cupones hechos para ti</h2>
+            <div className="MyPoints__cupones__header-points">
+              <p>
+                Cuentas con
               {' '}
-              <span>50</span>
-              {' '}
+                <span>0</span>
+                {' '}
               puntos
             </p>
+            </div>
           </div>
-        </div>
-        <div className="MyPoints__cupones__wp">
-          {
-            cupones.map((item) => (
-              <GifCard
-                title={item.title}
-                img={item.img}
-                company={item.company}
-                key={item.id}
-                points={Math.floor(Math.random() * 100)}
-              />
-            ))
-          }
-        </div>
-      </article>
-    </main>
+          <div className="MyPoints__cupones__wp">
+            {
+              cupones.map((item) => (
+                <GifCard
+                  title={item.title}
+                  img={item.img}
+                  company={item.company}
+                  key={item.id}
+                  points={Math.floor(Math.random() * 100)}
+                />
+              ))
+            }
+          </div>
+        </article>
+      </main>
+    </>
   );
 };
 

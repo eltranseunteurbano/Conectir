@@ -2,6 +2,10 @@
 	display: grid;
 	grid-template: 1fr / 30vw 70vw;
 
+	.errorPassword{
+		color: red;
+	}
+
 	&__form {
 		display: flex;
 		flex-direction: column;

@@ -8,7 +8,7 @@ import './index.scss';
 
 import { useHistory } from 'react-router-dom';
 //redux
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { registerStudentRequest } from '../../redux/actions';
 
 //Firebase
@@ -24,13 +24,13 @@ import * as Routes from '../../assets/js/Routes';
 import User from '../../constants/firebase/user/user';
 
 import { Welcome } from '../../assets/js/Alerts'
+import { store } from '../..';
 
 const Register = (props) => {
-	/*
-		const firebase = useFirebaseApp();
-		const firebaseUser = useUser();
-		const firebaseFirestore = useFirestore();
-	*/
+
+
+	var storeUser = useSelector((s) => s)
+
 	let history = useHistory();
 
 	const [step, setStep] = useState(1);
@@ -63,7 +63,9 @@ const Register = (props) => {
 				})
 			} else {
 				if (User.uid !== "") {
-					User.createInformation(name, lastName, user, check);
+					User.createInformation(name, lastName, user, check, ()=>{
+						User.goToUrl(Routes.HOME)
+					});
 				}
 			}
 		}
@@ -78,64 +80,27 @@ const Register = (props) => {
 		setType("");
 		Welcome()
 	}
-	/*
-
-const register = async () => {
-	firebase.auth().createUserWithEmailAndPassword(email, password)
-		.then(() => {
-			firebaseFirestore.collection('users').doc(firebaseUser.uid).set({ uid: firebaseUser.uid, name, lastName, email, type: user }).then(() => { console.log('escrito') }).catch((error) => console.log(error))
-			firebaseUser.updateProfile({
-				displayName: name + ' ' + lastName,
-			}).catch(error => console.error(error))
-			props.registerStudentRequest(firebaseUser)
-			Welcome()
-			setName("");
-			setLastName("");
-			setEmail("");
-			setPassword("");
-			setCheck(false)
-			setStep(1)
-			setUser("")
-			history.push(Routes.INDEX)
-		})
-		.catch((error) => {
-			console.error(error)
-			switch (error.code) {
-				case 'auth/email-already-in-use':
-					return errorAlert('Este correo ya esta en uso');
-
-				case 'auth/weak-password':
-					return errorAlert('La contraseña debe tener minimo 6 caracteres');
-
-				case 'auth/invalid-email':
-					return errorAlert('Tienes un error en tu correo electrónico. Intentalo nuevamente.');
-
-				default:
-					return errorAlert('Se presentó un error ');
-			}
-		});
-}
-*/
-
+	
 	useEffect(() => {
 		setPassword("")
-		console.log(User)
-		User.event.getEvent("updateUser", () => {
-			setEmail(User.email);
-		})
-		User.event.getEvent("updateType", () => {
-			if (User.accountType === "githup") {
-				setPassword(undefined);
-				setType("githup");
-			}
-		})
 
-	}, []);
+		if (User.email !== "") {
+			setEmail(User.email);
+		}
+
+
+		if (User.accountType === "githup") {
+			setPassword(undefined);
+			setType("githup");
+		}
+
+	}, [storeUser, step]);
 
 	return (
 		<main className="Register">
 
 			<Background />
+
 			{step === 1
 				? (
 					<article className="Register__form">
@@ -217,7 +182,19 @@ const register = async () => {
 						<Input title="Nombre" value={name} placeholder="Aquí va tu nombre" exportValue={setName} />
 						<Input title="Apellido" value={lastName} placeholder="Aquí va tu apellido" exportValue={setLastName} />
 						{type !== "githup" && <Input title={user === "student" ? "Correo Institucional" : user === "honor" ? "Correo electrónico" : ""} value={email} type="email" placeholder="Aquí va tu correo electrónico" exportValue={setEmail} />}
-						{password !== undefined && <Input title="Contraseña" placeholder="Aquí va tu contraseña" type="password" exportValue={setPassword} />}
+						{password !== undefined &&
+							<>
+								<Input
+									title="Contraseña"
+									placeholder="Aquí va tu contraseña"
+									type="password"
+									exportValue={setPassword} />
+								{password.length >= 8 ?
+									<p></p>
+									:
+									<p className="errorPassword">La contraseña de contener al menos 8 caracteres</p>}
+							</>
+						}
 						<label className="Register__form__check"><input type="checkbox" onChange={() => setCheck(!check)} /> <span>Leí y acepto los <a href="#">Términos y Condiciones</a></span></label>
 
 						<div className="Register__form__buttons">
@@ -227,9 +204,9 @@ const register = async () => {
 
 							<div onClick={register}>
 								<Button title="Registrar"
-									type={user === 'student' ? name !== "" && lastName !== "" && email !== "" && check ? 'active' : 'disabled'
-										: user === 'honor' ? name !== "" && lastName !== "" && email !== "" && check ? 'active' : 'disabled' : ''}
-									data='default' redirect={Routes.HOME} />
+									type={user === 'student' ? name !== "" && lastName !== "" && email !== "" && check && (password === undefined || password.length >= 8) ? 'active' : 'disabled'
+										: user === 'honor' ? name !== "" && lastName !== "" && email !== "" && check && (password === undefined || password.length >= 8) ? 'active' : 'disabled' : ''}
+									data='default' />
 							</div>
 						</div>
 

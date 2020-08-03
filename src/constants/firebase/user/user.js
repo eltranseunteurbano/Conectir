@@ -1,9 +1,14 @@
 import * as firebase from "firebase/app";
 
+import { Route } from "react-router-dom";
+
+import { store } from "../../..";
 import Database, { routes_database } from "../database/database";
 import Firebase from "../setup/firebase";
 import EventManager from "../../helpers/EventManager";
+import { actions } from "../../../redux/actions";
 import { errorAlert } from "../../../assets/js/Alerts";
+import * as Routes from "../../../assets/js/Routes";
 
 class user_firebase {
 
@@ -25,18 +30,34 @@ class user_firebase {
 
         this.auth = Firebase.auth();
 
-        this.getUserChangeLocal(() => {
+        this.getUserChangeLocal((state) => {
 
         })
+
+        this.event.getEvent("updateUser", () => {
+            var user = store.getState().user;
+            user.email = this.email;
+            store.dispatch({ type: actions.setUserInformation, payload: user })
+        })
+
+        this.event.getEvent("updateType", () => {
+            var user = store.getState().user;
+            user.accountType = this.accountType;
+            store.dispatch({ type: actions.setUserInformation, payload: user })
+        })
+    }
+
+    goToUrl(url) {
+        store.dispatch({ type: actions.goToUrl, payload: url })
     }
 
     loginGithup() {
         var provider = new firebase.auth.GithubAuthProvider();
-        Firebase.auth().signInWithRedirect(provider);
+        this.auth.signInWithRedirect(provider);
     }
 
     getUserGithup(load) {
-        Firebase.auth().getRedirectResult().then(({ user }) => {
+        this.auth.getRedirectResult().then(({ user }) => {
 
             if (user) {
                 var url = routes_database.user + "/" + user.uid;
@@ -85,13 +106,36 @@ class user_firebase {
         });;
     }
 
+    /*
     register(user, password) {
-
-
         return this.auth.createUserWithEmailAndPassword(user, password);
+    }
+    */
 
+    register(email, password, load) {
 
+        this.auth.createUserWithEmailAndPassword(email, password).then((userdata) => {
 
+            var user = {
+                uid: userdata.user.uid,
+                email,
+                userdata
+            }
+
+            load && load(user);
+
+        }).catch((error) => {
+            console.error(error.message, error.code);
+            if (error.code === 'auth/invalid-email') {
+                errorAlert('Tienes un error en tu correo electrónico. Intentalo nuevamente.');
+            } else if (error.code === 'auth/user-not-found') {
+                errorAlert('No hay un usuario registrado con este correo electrónico.');
+            } else if (error.code === 'auth/wrong-password') {
+                errorAlert('Tu correo electrónico o contraseña estan equivocados.');
+            } else if (error.code === 'auth/email-already-in-use') {
+                errorAlert('La dirección de correo electrónico ya está en uso por otra cuenta.');
+            }
+        })
     }
 
     logout(load) {
@@ -112,8 +156,7 @@ class user_firebase {
 
     getUserChangeLocal(load) {
         if (this.userFirebase == null) {
-            Firebase.auth().onAuthStateChanged((user) => {
-
+            this.auth.onAuthStateChanged((user) => {
 
                 if (user) {
                     // User is signed in.
@@ -128,7 +171,6 @@ class user_firebase {
                         if (type) {
                             this.updateAccountType(type)
                             this.event.exeEvent("updateType");
-
                         }
                     })
 
@@ -138,13 +180,29 @@ class user_firebase {
                             var info = snap.val();
                             this.updateInformation(info);
                             this.event.exeEvent("updateInformation");
+                            console.clear();
+                            console.log(window.location.pathname)
+                            if(window.location.pathname === Routes.INDEX || window.location.pathname === Routes.REGISTER){
+                                this.goToUrl(Routes.HOME);
+                            }else{
+                                this.goToUrl("");
+                            }
+                            
+                        } else {
+                            this.goToUrl(Routes.REGISTER);
                         }
                     });
+
+
+
 
                     load && load(true);
 
                 } else {
                     // No user is signed in.
+
+                    this.goToUrl(Routes.INDEX);
+
                     load && load(false);
                 }
             });
@@ -156,37 +214,27 @@ class user_firebase {
 
         if (uid === null) {
 
-            this.register(email, pass).then((userdata) => {
+            this.register(email, pass, (userData) => {
 
-
-                let url = routes_database.user + "/" + userdata.user.uid;
                 var user = {
-                    uid: userdata.user.uid, email, accountType
+                    uid: userData.uid, email, accountType
                 }
+
+                let url = routes_database.user + "/" + user.uid;
+
                 Database.writeDatabase(url, user, () => {
                     this.updateUser(user);
                     this.updateAccountType(accountType);
 
-                    if (userdata.user) {
-                        //  var uid = result.user.uid;
-                        userdata.user.sendEmailVerification();
-                        load && load(userdata);
+                    if (user.uid !== null) {
+                        userData.userdata.sendEmailVerification();
+
+                        this.goToUrl(Routes.REGISTER);
+
+                        load && load(userData);
                     }
                 });
-
-
-
-            }).catch((error) => {
-                console.error(error.message);
-                if (error.code === 'auth/invalid-email') {
-                    errorAlert('Tienes un error en tu correo electrónico. Intentalo nuevamente.');
-                } else if (error.code === 'auth/user-not-found') {
-                    errorAlert('No hay un usuario registrado con este correo electrónico.');
-                } else if (error.code === 'auth/wrong-password') {
-                    errorAlert('Tu correo electrónico o contraseña estan equivocados.');
-                }
-            });
-
+            })
 
 
         } else {
@@ -199,17 +247,13 @@ class user_firebase {
                 this.updateUser(user);
                 this.updateAccountType(accountType);
 
+                this.goToUrl(Routes.REGISTER);
+
             });
-
         }
-
-
-
     }
 
-
-
-    createInformation(name, lastName, role, accept) {
+    createInformation(name, lastName, role, accept, load) {
 
         if (this.uid !== "") {
             let url = routes_database.user + "/" + this.uid + "/information";
@@ -219,6 +263,7 @@ class user_firebase {
 
             Database.writeDatabase(url, information, () => {
                 this.updateInformation(information);
+                load && load();
             })
 
         }
